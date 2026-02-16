@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bahaa Meghnous</title>
+
+<style>
+/* ===== General Styles ===== */
+body{
+    margin:0;
+    font-family:'Segoe UI', Tahoma, sans-serif;
+    background: linear-gradient(135deg,#040404,#0f172a,#000);
+    color:white;
+    text-align:center;
+    overflow-x:hidden;
+    background-size: 400% 400%;
+    animation: bgAnimation 25s ease infinite;
+}
+
+/* ===== Dynamic Background Animation ===== */
+@keyframes bgAnimation{
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
+/* ===== Fade-in animation ===== */
+.fade-in{
+    opacity:0;
+    transform: translateY(20px);
+    animation:fadeIn 1s forwards;
+}
+
+@keyframes fadeIn{
+    to{
+        opacity:1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Header ===== */
+header{
+    padding:40px 0;
+}
+
+header h1{
+    font-size:48px;
+    letter-spacing:7px;
+    text-transform:uppercase;
+    text-shadow:0 0 35px rgba(0,255,255,0.6);
+}
+
+header p{
+    color:#9ca3af;
+    letter-spacing:4px;
+    margin-top:8px;
+}
+
+/* ===== Cinematic Text ===== */
+.signature, .extra-text{
+    max-width:850px;
+    margin:20px auto;
+    padding:20px;
+}
+
+.signature p, .extra-text p{
+    font-size:22px;
+    line-height:1.7;
+    letter-spacing:1.5px;
+    color:#e5e7eb;
+    font-style:italic;
+}
+
+/* ===== Image Gallery ===== */
+.gallery, .gallery2{
+    margin:30px auto;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:15px;
+}
+
+.gallery img, .gallery2 img{
+    width:160px;
+    height:160px;
+    object-fit:cover;
+    border-radius:20px;
+    cursor:pointer;
+    box-shadow:0 0 35px rgba(0,255,255,0.35);
+    transition:0.5s;
+}
+
+.gallery img:hover, .gallery2 img:hover{
+    transform:scale(1.1) rotate(1deg);
+    box-shadow:0 0 55px rgba(0,255,255,0.6);
+}
+
+/* ===== Lightbox ===== */
+.lightbox{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.95);
+    display:none;
+    justify-content:center;
+    align-items:center;
+    z-index:999;
+}
+
+.lightbox img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:20px;
+    box-shadow:0 0 60px rgba(0,255,255,0.7);
+    animation:zoom 0.4s ease;
+}
+
+@keyframes zoom{
+    from{transform:scale(0.7);}
+    to{transform:scale(1);}
+}
+
+.lightbox span{
+    position:absolute;
+    top:20px;
+    right:30px;
+    font-size:40px;
+    color:white;
+    cursor:pointer;
+}
+
+/* ===== Personal Info Card ===== */
+.card{
+    max-width:650px;
+    margin:40px auto;
+    padding:40px;
+    background:rgba(255,255,255,0.05);
+    border-radius:25px;
+    backdrop-filter:blur(14px);
+    box-shadow:0 0 55px rgba(0,0,0,0.85);
+}
+
+.card h2{
+    margin-bottom:35px;
+    letter-spacing:5px;
+    text-shadow:0 0 20px rgba(0,255,255,0.5);
+}
+
+.info{
+    margin:18px 0;
+}
+
+.info span{
+    display:block;
+    font-size:14px;
+    color:#00f7ff;
+    letter-spacing:3px;
+}
+
+.info p{
+    font-size:22px;
+    font-weight:600;
+}
+
+/* ===== Circular Images ===== */
+.circles img{
+    width:150px;
+    height:150px;
+    object-fit:contain;
+    border-radius:50%;
+    margin:10px;
+    cursor:pointer;
+    box-shadow:0 0 30px rgba(255,255,255,0.25);
+    transition:0.4s;
+}
+
+.circles img:hover{
+    transform:scale(1.12);
+}
+
+/* ===== Media ===== */
+.media{
+    margin:60px 0;
+}
+
+/* ===== Featured Image Section ===== */
+.featured-image-box {
+    background: linear-gradient(135deg, #0f172a, #040404);
+    padding: 15px;
+    border-radius: 25px;
+    box-shadow: 0 0 45px rgba(0,255,255,0.5);
+}
+
+.featured-image {
+    max-width: 70%;  /* حجم أصغر */
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 0 35px rgba(0,255,255,0.6);
+    transition: transform 0.5s;
+}
+
+.featured-image:hover {
+    transform: scale(1.05);
+}
+
+/* ===== Constantine Text Frame with Typing Effect ===== */
+#constantine-text{
+    max-width:900px;
+    margin:40px auto;
+    padding:30px 40px;
+    background: rgba(0,0,0,0.6);
+    border: 2px solid #00f7ff;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+    color: #e5e7eb;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    line-height: 1.8;
+    text-align: justify;
+    position: relative;
+}
+
+#constantine-text h2{
+    color:#00f7ff;
+    text-align:center;
+    font-size:28px;
+    margin-bottom:20px;
+    text-shadow: 0 0 12px rgba(0,255,255,0.7);
+}
+
+/* Typing effect */
+.typing-text{
+    display:inline-block;
+    white-space:pre-wrap;
+    overflow:hidden;
+    border-right:3px solid #00f7ff;
+    width:0;
+    animation: typing 15s steps(300, end) forwards, blink 0.75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
+
+/* ===== Footer ===== */
+footer{
+    margin:40px 0;
+}
+
+footer a{
+    color:#00f7ff;
+    font-size:18px;
+    text-decoration:none;
+}
+
+footer a:hover{
+    text-shadow:0 0 18px #00f7ff;
+}
+
+/* ===== Responsive ===== */
+@media (max-width:768px){
+    header h1{
+        font-size:36px;
+    }
+    .signature p, .extra-text p{
+        font-size:18px;
+    }
+    .card h2{
+        font-size:24px;
+    }
+    .info p{
+        font-size:18px;
+    }
+    .gallery img, .gallery2 img{
+        width:120px;
+        height:120px;
+    }
+    .circles img{
+        width:100px;
+        height:100px;
+    }
+    #constantine-text{
+        padding:20px 15px;
+    }
+    #constantine-text h2{
+        font-size:22px;
+    }
+    .typing-text{
+        font-size:16px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>Bahaa Meghnous</h1>
+    <p>Silence • Vision • Cinema</p>
+</header>
+
+<section class="signature fade-in">
+    <p>
+        "In silence, the strongest ideas are born.  
+        Every image carries an emotion,  
+        every moment tells a story."
+    </p>
+</section>
+
+<section class="extra-text fade-in">
+    <p>
+        "Creativity drives all success.  
+        Sport, discipline, and perseverance build a strong mind and a unique vision."
+    </p>
+</section>
+
+<!-- Gallery 1 -->
+<section class="gallery fade-in">
+   <img src="images/1769162096249.jpg" alt="photo1" onclick="openImg(this.src)">
+   <img src="images/1769162096228.jpg" alt="photo2" onclick="openImg(this.src)">
+   <img src="images/1769162096233.jpg" alt="photo3" onclick="openImg(this.src)">
+   <img src="images/1769162096244.jpg" alt="photo4" onclick="openImg(this.src)">
+   <img src="images/1769074932585.webp" alt="photo5" onclick="openImg(this.src)">
+   <img src="images/1769162096239.jpg" alt="photo6" onclick="openImg(this.src)">
+</section>
+
+<!-- Gallery 2 -->
+<section class="gallery2 fade-in">
+   <img src="images/1769160754534.jpg" alt="photo7" onclick="openImg(this.src)">
+   <img src="images/1769166049902.webp" alt="photo8" onclick="openImg(this.src)">
+   <img src="images/1769084016080.webp" alt="photo9" onclick="openImg(this.src)">
+   <img src="images/1769166049909.webp" alt="photo10" onclick="openImg(this.src)">
+   <img src="images/1769166049895.webp" alt="photo11" onclick="openImg(this.src)">
+   <img src="images/1769166049883.webp" alt="photo12" onclick="openImg(this.src)">
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+    <span onclick="closeImg()">&times;</span>
+    <img id="lightboxImg">
+</div>
+
+<!-- Personal Info -->
+<section class="card fade-in">
+    <h2>Personal Information</h2>
+    <div class="info"><span>NAME</span><p>Bahaa Eddine Moubarek</p></div>
+    <div class="info"><span>FIRST NAME</span><p>Meghnous</p></div>
+    <div class="info"><span>DATE OF BIRTH</span><p>16 / 11 / 2005</p></div>
+    <div class="info"><span>PHONE</span><p>PRV.</p></div>
+    <div class="info"><span>EMAIL</span><p>bahaameghnous9@gmail.com</p></div>
+    <div class="info"><span>Instagram</span><p>x_bah_25_m_x</p></div>
+    <div class="info"><span>HOBBIES / PASSIONS</span><p>Athlete • Programming • Video Editing</p></div>
+</section>
+
+<!-- Circular Images -->
+<section class="circles fade-in">
+   <img src="images/1768211951404.webp" alt="circle1" onclick="openImg(this.src)">
+   <img src="images/1769073886836.webp" alt="circle2" onclick="openImg(this.src)">
+   <img src="images/1769160754540.webp" alt="circle3" onclick="openImg(this.src)">
+   <img src="images/1769176522897.jpg" alt="circle4" onclick="openImg(this.src)">
+</section>
+
+<!-- Text before Music -->
+<section class="extra-text fade-in">
+    <p>
+        "Dive into the sound universe where every note tells an emotion,  
+        let the melody transport you into the heart of imagination."
+    </p>
+</section>
+
+<!-- Music -->
+<section class="media fade-in">
+    <h2>The Greatest Song</h2>
+    <audio id="backgroundMusic" controls autoplay loop>
+       <source src="audio/6CSXixZEFBQ.mp3" type="audio/mp3">
+    </audio>
+</section>
+
+<!-- Text before Featured Image -->
+<section class="extra-text fade-in">
+    <p>
+        "Observe the magic of visual creation,  
+        each shot is crafted to capture the essence of the moment."
+    </p>
+</section>
+
+<!-- Featured Image -->
+<section class="media fade-in">
+    <h2>Cinematographic Creation</h2>
+    <div class="featured-image-box">
+        <img src="images/1769189676271.jpg" alt="Featured Image" class="featured-image">
+    </div>
+</section>
+
+<!-- Constantine Text with Typing -->
+<section id="constantine-text">
+    <h2>My Journey from Constantine</h2>
+    <div class="typing-text">
+“I was born in the state of Constantine, a city filled with the scent of history and the legacy of my ancestors. 
+I grew up amidst streets where civilization blends with antiquity, which gave me both inspiration and ambition. 
+During my childhood, my dreams were big, but they were not mere fantasies—they were goals I believed I could achieve through hard work.
+
+Throughout my career, I have met many people, some with ambitions similar to mine, and others who broadened my perspective on life. 
+Every encounter was a new lesson, and every experience was a step toward building my character.
+
+I have learned that dreams do not come true simply by talking about them; they are realized through effort and perseverance. 
+The road has not always been easy; life is full of challenges that test our willpower. 
+But I believe it is these challenges that make us stronger. Today, I strive to turn my dreams into reality, 
+and I realize that every moment spent working hard brings me closer to achieving what I aspire to. 
+Constantine, with its mountains and valleys, taught me that peaks are conquered step by step, 
+and each summit reached opens new horizons. This is what drives me to move forward with determination and enthusiasm.”</div>
+</section>
+
+<footer class="fade-in">
+    <a href="index.html">Log Out</a>
+</footer>
+
+<script>
+function openImg(src){
+    document.getElementById("lightbox").style.display="flex";
+    document.getElementById("lightboxImg").src=src;
+}
+
+function closeImg(){
+    document.getElementById("lightbox").style.display="none";
+}
+</script>
+
+</body>
+</html>
