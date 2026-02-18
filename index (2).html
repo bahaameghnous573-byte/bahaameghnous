@@ -15,16 +15,17 @@ body{
     overflow-x:hidden;
     background-size: 600% 600%;
     animation: bgAnimation 30s ease infinite;
+    padding-bottom: 100px; /* space for fixed music player */
 }
 
-/* ===== Dynamic Background Animation ===== */
+/* ===== Background Animation ===== */
 @keyframes bgAnimation{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
 
-/* ===== Fade-in animation ===== */
+/* ===== Fade-in Animation ===== */
 .fade-in{
     opacity:0;
     transform: translateY(20px);
@@ -59,7 +60,7 @@ header p{
     margin-top:10px;
 }
 
-/* ===== Cinematic Text with Frame ===== */
+/* ===== Cinematic Text ===== */
 .signature, .extra-text{
     max-width:850px;
     margin:30px auto;
@@ -195,11 +196,6 @@ header p{
     transform:scale(1.15);
 }
 
-/* ===== Media ===== */
-.media{
-    margin:70px 0;
-}
-
 /* ===== Featured Image Section ===== */
 .featured-image-box {
     background: linear-gradient(135deg, #0f172a, #040404);
@@ -220,7 +216,7 @@ header p{
     transform: scale(1.08);
 }
 
-/* ===== Constantine Text Frame with Typing Effect ===== */
+/* ===== Constantine Text Frame ===== */
 #constantine-text{
     max-width:900px;
     margin:45px auto;
@@ -263,6 +259,47 @@ header p{
     50% { border-color: transparent; }
 }
 
+/* ===== Fixed Music Player (Small & Professional) ===== */
+#musicPlayer{
+    position:fixed;
+    bottom:10px;
+    left:50%;
+    transform:translateX(-50%);
+    width:400px;
+    background: linear-gradient(135deg,#0f172a,#040404,#0f172a);
+    padding:10px 15px;
+    border-radius:25px;
+    box-shadow:0 0 25px rgba(0,255,255,0.7);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    z-index:1000;
+    transition:0.3s;
+}
+
+#musicPlayer:hover{
+    box-shadow:0 0 40px rgba(0,255,255,0.9);
+    transform:translateX(-50%) scale(1.02);
+}
+
+/* Song title next to player */
+#songTitle{
+    font-size:16px;
+    color:#00f7ff;
+    font-weight:bold;
+    margin-left:10px;
+    text-shadow:0 0 10px #00f7ff;
+}
+
+/* Audio Player */
+#musicPlayer audio{
+    width:250px;
+    border-radius:15px;
+    outline:none;
+    box-shadow:0 0 15px #00f7ff;
+    cursor:pointer;
+}
+
 /* ===== Footer ===== */
 footer{
     margin:50px 0;
@@ -280,35 +317,17 @@ footer a:hover{
 
 /* ===== Responsive ===== */
 @media (max-width:768px){
-    header h1{
-        font-size:38px;
-    }
-    .signature p, .extra-text p{
-        font-size:18px;
-    }
-    .card h2{
-        font-size:24px;
-    }
-    .info p{
-        font-size:18px;
-    }
-    .gallery img, .gallery2 img{
-        width:120px;
-        height:120px;
-    }
-    .circles img{
-        width:100px;
-        height:100px;
-    }
-    #constantine-text{
-        padding:25px 20px;
-    }
-    #constantine-text h2{
-        font-size:22px;
-    }
-    .typing-text{
-        font-size:16px;
-    }
+    header h1{ font-size:38px; }
+    .signature p, .extra-text p{ font-size:18px; }
+    .card h2{ font-size:24px; }
+    .info p{ font-size:18px; }
+    .gallery img, .gallery2 img{ width:120px; height:120px; }
+    .circles img{ width:100px; height:100px; }
+    #constantine-text{ padding:25px 20px; }
+    #constantine-text h2{ font-size:22px; }
+    .typing-text{ font-size:16px; }
+    #musicPlayer{width:90%; flex-direction:column; gap:8px;}
+    #musicPlayer audio{width:100%;}
 }
 </style>
 </head>
@@ -376,19 +395,6 @@ footer a:hover{
    <img src="images/1769176522897.jpg" alt="circle4" onclick="openImg(this.src)">
 </section>
 
-<!-- Text before Music -->
-<section class="extra-text fade-in">
-    <p>"Dive into the sound universe where every note tells an emotion, let the melody transport you into the heart of imagination."</p>
-</section>
-
-<!-- Music -->
-<section class="media fade-in">
-    <h2>The Greatest Song</h2>
-    <audio id="backgroundMusic" controls autoplay loop>
-       <source src="audio/6CSXixZEFBQ.mp3" type="audio/mp3">
-    </audio>
-</section>
-
 <!-- Featured Image -->
 <section class="media fade-in">
     <h2>Cinematographic Creation</h2>
@@ -401,11 +407,11 @@ footer a:hover{
 <section id="constantine-text">
     <h2>My Journey from Constantine</h2>
     <div class="typing-text">
-“I was born in the state of Constantine, a city filled with the scent of history and the legacy of my ancestors. 
-I grew up amidst streets where civilization blends with antiquity, which gave me both inspiration and ambition. 
-During my childhood, my dreams were big, but they were not mere fantasies—they were goals I believed I could achieve through hard work.
-...
-This is what drives me to move forward with determination and enthusiasm.”</div>
+I was born in the state of Constantine, a city filled with the scent of history and the legacy of my 
+ancestors. I grew up amidst streets where civilization blends with antiquity, which gave me both inspiration and ambition. During my childhood, my dreams were big, but they were not mere fantasies—they were goals I believed I could achieve through hard work. Throughout my career, I have met many people, some with ambitions similar to mine, and others who broadened my perspective on life. Every encounter was a new lesson, and every experience was a step toward building my character. I have learned that dreams do not come true simply by talking about them; they are realized through effort and perseverance.
+ The road has not always been easy; life is full of challenges that test our willpower. 
+But I believe it is these challenges that make us stronger. Today, I strive to turn my dreams into reality, and I realize that every moment spent working hard brings me closer to achieving what I aspire to. Constantine, with its mountains and valleys, 
+taught me that peaks are conquered step by step, and each summit reached opens new horizons. This is what drives me to move forward with determination and enthusiasm.”</div>
 </section>
 
 <!-- Footer -->
@@ -413,12 +419,19 @@ This is what drives me to move forward with determination and enthusiasm.”</di
     <a href="index.html">Log Out</a>
 </footer>
 
+<!-- Professional Fixed Music Player -->
+<div id="musicPlayer">
+    <audio id="backgroundMusic" controls autoplay loop>
+        <source src="audio/6CSXixZEFBQ.mp3" type="audio/mp3">
+    </audio>
+    <span id="songTitle">🎵  Relaxing music </span>
+</div>
+
 <script>
 function openImg(src){
     document.getElementById("lightbox").style.display="flex";
     document.getElementById("lightboxImg").src=src;
 }
-
 function closeImg(){
     document.getElementById("lightbox").style.display="none";
 }
@@ -426,3 +439,4 @@ function closeImg(){
 
 </body>
 </html>
+
