@@ -9,12 +9,12 @@
 body{
     margin:0;
     font-family:'Segoe UI', Tahoma, sans-serif;
-    background: linear-gradient(135deg,#040404,#0f172a,#000);
+    background: linear-gradient(270deg, #040404, #0f172a, #000);
     color:white;
     text-align:center;
     overflow-x:hidden;
-    background-size: 400% 400%;
-    animation: bgAnimation 25s ease infinite;
+    background-size: 600% 600%;
+    animation: bgAnimation 30s ease infinite;
 }
 
 /* ===== Dynamic Background Animation ===== */
@@ -40,27 +40,34 @@ body{
 
 /* ===== Header ===== */
 header{
-    padding:40px 0;
+    padding:50px 0;
+    background: rgba(0,0,0,0.6);
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
 }
 
 header h1{
-    font-size:48px;
-    letter-spacing:7px;
+    font-size:50px;
+    letter-spacing:8px;
     text-transform:uppercase;
-    text-shadow:0 0 35px rgba(0,255,255,0.6);
+    color:#00f7ff;
+    text-shadow: 0 0 40px rgba(0,255,255,0.7), 0 0 80px rgba(0,255,255,0.3);
 }
 
 header p{
     color:#9ca3af;
     letter-spacing:4px;
-    margin-top:8px;
+    margin-top:10px;
 }
 
-/* ===== Cinematic Text ===== */
+/* ===== Cinematic Text with Frame ===== */
 .signature, .extra-text{
     max-width:850px;
-    margin:20px auto;
-    padding:20px;
+    margin:30px auto;
+    padding:25px;
+    border: 2px solid #00f7ff;
+    border-radius:25px;
+    background: rgba(0,0,0,0.5);
+    box-shadow: 0 0 35px rgba(0,255,255,0.3);
 }
 
 .signature p, .extra-text p{
@@ -73,26 +80,26 @@ header p{
 
 /* ===== Image Gallery ===== */
 .gallery, .gallery2{
-    margin:30px auto;
+    margin:35px auto;
     display:flex;
     flex-wrap:wrap;
     justify-content:center;
-    gap:15px;
+    gap:20px;
 }
 
 .gallery img, .gallery2 img{
     width:160px;
     height:160px;
     object-fit:cover;
-    border-radius:20px;
+    border-radius:25px;
     cursor:pointer;
-    box-shadow:0 0 35px rgba(0,255,255,0.35);
+    box-shadow:0 0 45px rgba(0,255,255,0.4);
     transition:0.5s;
 }
 
 .gallery img:hover, .gallery2 img:hover{
-    transform:scale(1.1) rotate(1deg);
-    box-shadow:0 0 55px rgba(0,255,255,0.6);
+    transform:scale(1.12) rotate(1deg);
+    box-shadow:0 0 70px rgba(0,255,255,0.6);
 }
 
 /* ===== Lightbox ===== */
@@ -112,9 +119,9 @@ header p{
 .lightbox img{
     max-width:90%;
     max-height:90%;
-    border-radius:20px;
-    box-shadow:0 0 60px rgba(0,255,255,0.7);
-    animation:zoom 0.4s ease;
+    border-radius:25px;
+    box-shadow:0 0 70px rgba(0,255,255,0.7);
+    animation:zoom 0.5s ease;
 }
 
 @keyframes zoom{
@@ -126,30 +133,31 @@ header p{
     position:absolute;
     top:20px;
     right:30px;
-    font-size:40px;
+    font-size:45px;
     color:white;
     cursor:pointer;
 }
 
 /* ===== Personal Info Card ===== */
 .card{
-    max-width:650px;
-    margin:40px auto;
-    padding:40px;
-    background:rgba(255,255,255,0.05);
-    border-radius:25px;
-    backdrop-filter:blur(14px);
-    box-shadow:0 0 55px rgba(0,0,0,0.85);
+    max-width:700px;
+    margin:50px auto;
+    padding:45px;
+    background: rgba(0,0,0,0.6);
+    border-radius:30px;
+    backdrop-filter:blur(15px);
+    box-shadow:0 0 70px rgba(0,0,0,0.9);
 }
 
 .card h2{
-    margin-bottom:35px;
+    margin-bottom:40px;
     letter-spacing:5px;
-    text-shadow:0 0 20px rgba(0,255,255,0.5);
+    color:#00f7ff;
+    text-shadow:0 0 25px rgba(0,255,255,0.5);
 }
 
 .info{
-    margin:18px 0;
+    margin:20px 0;
 }
 
 .info span{
@@ -165,55 +173,62 @@ header p{
 }
 
 /* ===== Circular Images ===== */
+.circles{
+    margin:50px auto;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:20px;
+}
+
 .circles img{
     width:150px;
     height:150px;
     object-fit:contain;
     border-radius:50%;
-    margin:10px;
     cursor:pointer;
-    box-shadow:0 0 30px rgba(255,255,255,0.25);
+    box-shadow:0 0 35px rgba(255,255,255,0.25);
     transition:0.4s;
 }
 
 .circles img:hover{
-    transform:scale(1.12);
+    transform:scale(1.15);
 }
 
 /* ===== Media ===== */
 .media{
-    margin:60px 0;
+    margin:70px 0;
 }
 
 /* ===== Featured Image Section ===== */
 .featured-image-box {
     background: linear-gradient(135deg, #0f172a, #040404);
-    padding: 15px;
-    border-radius: 25px;
-    box-shadow: 0 0 45px rgba(0,255,255,0.5);
+    padding: 20px;
+    border-radius: 30px;
+    box-shadow: 0 0 55px rgba(0,255,255,0.5);
 }
 
 .featured-image {
-    max-width: 70%;  /* حجم أصغر */
+    max-width: 70%;
     height: auto;
-    border-radius: 20px;
-    box-shadow: 0 0 35px rgba(0,255,255,0.6);
+    border-radius: 25px;
+    box-shadow: 0 0 45px rgba(0,255,255,0.6);
     transition: transform 0.5s;
 }
 
 .featured-image:hover {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 /* ===== Constantine Text Frame with Typing Effect ===== */
 #constantine-text{
     max-width:900px;
-    margin:40px auto;
-    padding:30px 40px;
+    margin:45px auto;
+    padding:35px 45px;
     background: rgba(0,0,0,0.6);
     border: 2px solid #00f7ff;
-    border-radius: 20px;
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+    border-radius: 25px;
+    box-shadow: 0 0 35px rgba(0, 255, 255, 0.5);
     color: #e5e7eb;
     font-family: 'Segoe UI', Tahoma, sans-serif;
     line-height: 1.8;
@@ -225,8 +240,8 @@ header p{
     color:#00f7ff;
     text-align:center;
     font-size:28px;
-    margin-bottom:20px;
-    text-shadow: 0 0 12px rgba(0,255,255,0.7);
+    margin-bottom:25px;
+    text-shadow: 0 0 15px rgba(0,255,255,0.7);
 }
 
 /* Typing effect */
@@ -250,7 +265,7 @@ header p{
 
 /* ===== Footer ===== */
 footer{
-    margin:40px 0;
+    margin:50px 0;
 }
 
 footer a{
@@ -260,13 +275,13 @@ footer a{
 }
 
 footer a:hover{
-    text-shadow:0 0 18px #00f7ff;
+    text-shadow:0 0 20px #00f7ff;
 }
 
 /* ===== Responsive ===== */
 @media (max-width:768px){
     header h1{
-        font-size:36px;
+        font-size:38px;
     }
     .signature p, .extra-text p{
         font-size:18px;
@@ -286,7 +301,7 @@ footer a:hover{
         height:100px;
     }
     #constantine-text{
-        padding:20px 15px;
+        padding:25px 20px;
     }
     #constantine-text h2{
         font-size:22px;
@@ -300,24 +315,19 @@ footer a:hover{
 
 <body>
 
+<!-- Header -->
 <header>
     <h1>Bahaa Meghnous</h1>
     <p>Silence • Vision • Cinema</p>
 </header>
 
+<!-- Cinematic Text -->
 <section class="signature fade-in">
-    <p>
-        "In silence, the strongest ideas are born.  
-        Every image carries an emotion,  
-        every moment tells a story."
-    </p>
+    <p>"In silence, the strongest ideas are born. Every image carries an emotion, every moment tells a story."</p>
 </section>
 
 <section class="extra-text fade-in">
-    <p>
-        "Creativity drives all success.  
-        Sport, discipline, and perseverance build a strong mind and a unique vision."
-    </p>
+    <p>"Creativity drives all success. Sport, discipline, and perseverance build a strong mind and a unique vision."</p>
 </section>
 
 <!-- Gallery 1 -->
@@ -368,10 +378,7 @@ footer a:hover{
 
 <!-- Text before Music -->
 <section class="extra-text fade-in">
-    <p>
-        "Dive into the sound universe where every note tells an emotion,  
-        let the melody transport you into the heart of imagination."
-    </p>
+    <p>"Dive into the sound universe where every note tells an emotion, let the melody transport you into the heart of imagination."</p>
 </section>
 
 <!-- Music -->
@@ -380,14 +387,6 @@ footer a:hover{
     <audio id="backgroundMusic" controls autoplay loop>
        <source src="audio/6CSXixZEFBQ.mp3" type="audio/mp3">
     </audio>
-</section>
-
-<!-- Text before Featured Image -->
-<section class="extra-text fade-in">
-    <p>
-        "Observe the magic of visual creation,  
-        each shot is crafted to capture the essence of the moment."
-    </p>
 </section>
 
 <!-- Featured Image -->
@@ -405,18 +404,11 @@ footer a:hover{
 “I was born in the state of Constantine, a city filled with the scent of history and the legacy of my ancestors. 
 I grew up amidst streets where civilization blends with antiquity, which gave me both inspiration and ambition. 
 During my childhood, my dreams were big, but they were not mere fantasies—they were goals I believed I could achieve through hard work.
-
-Throughout my career, I have met many people, some with ambitions similar to mine, and others who broadened my perspective on life. 
-Every encounter was a new lesson, and every experience was a step toward building my character.
-
-I have learned that dreams do not come true simply by talking about them; they are realized through effort and perseverance. 
-The road has not always been easy; life is full of challenges that test our willpower. 
-But I believe it is these challenges that make us stronger. Today, I strive to turn my dreams into reality, 
-and I realize that every moment spent working hard brings me closer to achieving what I aspire to. 
-Constantine, with its mountains and valleys, taught me that peaks are conquered step by step, 
-and each summit reached opens new horizons. This is what drives me to move forward with determination and enthusiasm.”</div>
+...
+This is what drives me to move forward with determination and enthusiasm.”</div>
 </section>
 
+<!-- Footer -->
 <footer class="fade-in">
     <a href="index.html">Log Out</a>
 </footer>
