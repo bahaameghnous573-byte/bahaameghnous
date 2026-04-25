@@ -6,7 +6,6 @@
 
 <style>
 
-
 #h {
     margin-top: 20px;
     padding: 12px 28px;
@@ -19,25 +18,11 @@
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 0 15px rgba(0, 200, 255, 0.4);
-    letter-spacing: 1px;
 }
 
-/* hover effect */
 #h:hover {
     transform: scale(1.08);
-    box-shadow: 0 0 25px rgba(0, 255, 255, 0.7);
 }
-
-/* click effect */
-#h:active {
-    transform: scale(0.95);
-}
-
-
-
-
-
-
 
 body {
     margin: 0;
@@ -46,11 +31,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
+    font-family: Arial;
     color: #e0f7ff;
 }
 
-/* ===== زر صغير في الأعلى ===== */
 .admin-btn {
     position: fixed;
     top: 10px;
@@ -62,76 +46,70 @@ body {
     color: #00cfff;
     border-radius: 6px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-.admin-btn:hover {
-    background: rgba(0, 200, 255, 0.5);
-}
-
-/* ===== Box ===== */
 .box {
     background: rgba(255, 255, 255, 0.08);
     padding: 40px 60px;
     border-radius: 20px;
-    box-shadow: 0 0 40px rgba(0, 200, 255, 0.25);
     text-align: center;
-    backdrop-filter: blur(15px);
-    max-width: 500px;
-}
-
-legend {
-    font-size: 18px;
-    color: #99e0ff;
 }
 
 .circle img {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    object-fit: cover;
-    border: 3px solid #00f7ff50;
-    box-shadow: 0 0 25px rgba(0, 200, 255, 0.4);
 }
+
 </style>
 </head>
 
 <body>
 
-<!-- 🔵 زر صغير في الأعلى -->
-<button class="admin-btn" onclick="trackUser()">●</button>
+<button class="admin-btn" onclick="openAdmin()">● Admin</button>
 
 <div class="box">
     <div class="circle">
-        <img src="images/1769073886836.webp" alt="Photo">
+        <img src="images/1769073886836.webp">
     </div>
 
-    <br>
-    <legend>La page de Bahaa</legend>
-    <h2><u>Appuyez sur le bouton :</u></h2>
-     <button id="h"><a href="index (2).html">Tracking</a></button>
+    <h2>La page de Bahaa</h2>
+
+    <button id="h">Tracking</button>
 </div>
 
+<!-- ================= LOCAL STORAGE (بديل Firebase) ================= -->
 <script>
-function trackUser(){
 
-    let device = navigator.userAgent;
-    let time = new Date().toLocaleString();
+document.getElementById("h").addEventListener("click", () => {
 
-    let deviceType = /Mobi|Android/i.test(device) ? "Mobile 📱" : "PC 💻";
-
-    let data = {
-        device: device,
-        deviceType: deviceType,
-        time: time
+    // 📌 بيانات الزائر
+    const visitor = {
+        time: new Date().toLocaleString(),
+        type: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile 📱" : "PC 💻",
+        device: navigator.userAgent
     };
 
-    let oldData = JSON.parse(localStorage.getItem("visitors")) || [];
-    oldData.push(data);
-    localStorage.setItem("visitors", JSON.stringify(oldData));
+    // 📌 تخزين البيانات محليًا
+    let visitors = JSON.parse(localStorage.getItem("visitors")) || [];
+    visitors.push(visitor);
+    localStorage.setItem("visitors", JSON.stringify(visitors));
 
-    window.location.href = "index3.html";
+    // 🚀 الانتقال للصفحة الثانية
+    window.location.href = "./index (2).html";
+});
+
+// 🔐 زر الأدمن
+window.openAdmin = function () {
+    let pass = prompt("أدخل كلمة السر:");
+
+    if (pass === "041263312") {
+        window.location.href = "index3.html";
+    } else {
+        alert("كلمة السر خاطئة");
+    }
 }
+
 </script>
 
 </body>
