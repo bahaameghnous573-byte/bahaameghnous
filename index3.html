@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<title>لوحة التحكم - الزوار</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background: linear-gradient(135deg,#050505,#0f172a);
+    color:white;
+    padding:20px;
+}
+
+/* ===== Title ===== */
+h1{
+    text-align:center;
+    color:#00e5ff;
+    margin-bottom:25px;
+    text-shadow:0 0 10px #00e5ff;
+}
+
+/* ===== Table ===== */
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:rgba(255,255,255,0.05);
+    border-radius:12px;
+    overflow:hidden;
+    backdrop-filter: blur(10px);
+}
+
+th{
+    background:#00cfff;
+    color:black;
+    padding:12px;
+    font-size:14px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid rgba(255,255,255,0.1);
+    font-size:13px;
+}
+
+tr:hover{
+    background:rgba(0,255,255,0.08);
+}
+
+/* ===== Buttons ===== */
+.actions{
+    text-align:center;
+    margin-top:20px;
+}
+
+button{
+    padding:10px 15px;
+    margin:5px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:0.3s;
+}
+
+.clear{
+    background:#ff3b3b;
+    color:white;
+}
+
+.clear:hover{
+    background:#ff0000;
+}
+
+.back{
+    background:#00cfff;
+    color:black;
+}
+
+.back:hover{
+    background:#00a6d6;
+}
+
+/* ===== small info ===== */
+.info{
+    text-align:center;
+    margin-bottom:15px;
+    color:#aaa;
+}
+</style>
+</head>
+
+<body>
+
+<h1>📊 لوحة الزوار</h1>
+<div class="info">كل من دخل الموقع يتم تسجيله هنا</div>
+
+<table>
+    <thead>
+        <tr>
+            <th>الوقت</th>
+            <th>نوع الجهاز</th>
+            <th>الموقع (GPS)</th>
+        </tr>
+    </thead>
+    <tbody id="dataTable"></tbody>
+</table>
+
+<div class="actions">
+    <button class="clear" onclick="clearData()">حذف كل البيانات</button>
+    <button class="back" onclick="goBack()">رجوع</button>
+</div>
+
+<script>
+
+// ===== تحميل البيانات =====
+function loadData(){
+    let data = JSON.parse(localStorage.getItem("visitors")) || [];
+    let table = document.getElementById("dataTable");
+
+    table.innerHTML = "";
+
+    data.forEach(item => {
+        table.innerHTML += `
+        <tr>
+            <td>${item.time}</td>
+            <td>${item.device}</td>
+            <td>${item.location}</td>
+        </tr>
+        `;
+    });
+}
+
+// ===== حذف البيانات =====
+function clearData(){
+    if(confirm("هل تريد حذف كل البيانات؟")){
+        localStorage.removeItem("visitors");
+        loadData();
+    }
+}
+
+// ===== رجوع =====
+function goBack(){
+    window.location.href = "index.html";
+}
+
+// تشغيل عند فتح الصفحة
+loadData();
+
+</script>
+
+</body>
+</html>
