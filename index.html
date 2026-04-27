@@ -2,27 +2,188 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>Compte Bahaa</title>
+<meta name="viewport" content="width=1200">
 
-<style> #h { margin-top: 20px; padding: 12px 28px; font-size: 16px; font-weight: bold; color: white; background: linear-gradient(135deg, #00cfff, #0099ff); border: none; border-radius: 14px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 0 15px rgba(0, 200, 255, 0.4); } 
-#h:hover { transform: scale(1.08); } body { margin: 0; min-height: 100vh; background: linear-gradient(135deg, #0a0a0a, #1a1a1a, #020202); display: flex; justify-content: center; align-items: center; font-family: Arial; color: #e0f7ff; } .admin-btn { position: fixed; top: 10px; left: 10px; padding: 6px 10px; font-size: 11px; background: rgba(0, 200, 255, 0.2); border: 1px solid #00cfff; color: #00cfff; border-radius: 6px; cursor: pointer; } .box { background: rgba(255, 255, 255, 0.08); padding: 40px 60px; border-radius: 20px; text-align: center; } .circle img { width: 150px; height: 150px; border-radius: 50%; } </style>
+<title>Compte Bahaa | Black Belt Access</title>
+
+<style>
+/* ===== RESET & BASE ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at 10% 20%, #0a0f1e, #03050b);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+    color: #e0f7ff;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* خلفية متحركة */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.08), transparent);
+    pointer-events: none;
+    z-index: -1;
+    animation: pulseGlow 8s infinite;
+}
+
+@keyframes pulseGlow {
+    0% { opacity: 0.2; transform: scale(1);}
+    100% { opacity: 0.6; transform: scale(1.3);}
+}
+
+/* ===== زر الادمن ===== */
+.admin-btn {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    padding: 8px 16px;
+    font-size: 12px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    border: 1px solid #ff4d4d;
+    color: #ffaa77;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 100;
+    letter-spacing: 1px;
+}
+
+.admin-btn:hover {
+    background: #ff4d4d;
+    color: black;
+    border-color: white;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #ff4d4d;
+}
+
+/* ===== الصندوق الرئيسي ===== */
+.box {
+    background: rgba(12, 12, 20, 0.65);
+    backdrop-filter: blur(14px);
+    padding: 50px 70px;
+    border-radius: 55px;
+    text-align: center;
+    border: 1px solid rgba(255, 80, 80, 0.4);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    max-width: 90%;
+    width: 500px;
+}
+
+.box:hover {
+    transform: translateY(-8px);
+    border-color: #ffaa55;
+}
+
+/* ===== الصورة الدائرية ===== */
+.circle img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #ff6666;
+    box-shadow: 0 0 30px rgba(255, 80, 80, 0.5);
+    transition: 0.3s;
+}
+
+.circle img:hover {
+    transform: scale(1.05);
+    border-color: #ffaa55;
+    box-shadow: 0 0 40px #ffaa55;
+}
+
+/* ===== العنوان ===== */
+.box h2 {
+    margin: 25px 0 20px;
+    font-size: 28px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff4d4d, #ffbc00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    letter-spacing: 1px;
+}
+
+/* ===== زر TRACKING الرئيسي ===== */
+#h {
+    margin-top: 20px;
+    padding: 14px 32px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
+    border: none;
+    border-radius: 60px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 20px rgba(255, 80, 80, 0.6);
+    letter-spacing: 1px;
+}
+
+#h:hover {
+    transform: scale(1.08);
+    background: linear-gradient(135deg, #ffaa00, #ff4d4d);
+    box-shadow: 0 0 35px #ffaa55;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 550px) {
+    .box {
+        padding: 35px 25px;
+        width: 90%;
+    }
+    .circle img {
+        width: 110px;
+        height: 110px;
+    }
+    .box h2 {
+        font-size: 22px;
+    }
+    #h {
+        padding: 12px 24px;
+        font-size: 16px;
+    }
+    .admin-btn {
+        top: 12px;
+        left: 12px;
+        padding: 5px 12px;
+        font-size: 10px;
+    }
+}
+</style>
 </head>
-
 <body>
 
-<button class="admin-btn" onclick="openAdmin()">● Admin</button>
+<button class="admin-btn" onclick="openAdmin()">● ADMIN ACCESS</button>
 
 <div class="box">
     <div class="circle">
-        <img src="images/1769073886836.webp">
+        <img src="images/1777276122460.png">
     </div>
 
-    <h2>La page de Bahaa</h2>
+    <h2>⚡BAHAA MEGHNOUS⚡</h2>
 
-    <button id="h">Tracking</button>
+    <button id="h">🥋 TRACKING / ENTRANCE 🥋</button>
 </div>
 
-<!-- ========== FIREBASE ========== -->
+<!-- ========== FIREBASE + GEOLOCATION ========== -->
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
@@ -41,12 +202,50 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// 🌍 دالة لجلب الموقع التقريبي من الـ IP
+async function getLocationInfo() {
+    try {
+        const response = await fetch('http://ip-api.com/json/');
+        const data = await response.json();
+        if (data.status === 'success') {
+            return {
+                country: data.country || "غير معروف",
+                city: data.city || "غير معروف",
+                region: data.regionName || "غير معروف",
+                lat: data.lat || "0",
+                lon: data.lon || "0"
+            };
+        } else {
+            return { country: "غير معروف", city: "غير معروف", region: "غير معروف", lat: "0", lon: "0" };
+        }
+    } catch (error) {
+        console.log("Geolocation error:", error);
+        return { country: "خطأ", city: "خطأ", region: "خطأ", lat: "0", lon: "0" };
+    }
+}
+
 document.getElementById("h").addEventListener("click", async () => {
+
+    // 🌍 جلب الموقع
+    const location = await getLocationInfo();
+
+    // 🌐 اللغة والمنطقة الزمنية
+    const language = navigator.language || "غير معروف";
+    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "غير معروف";
 
     const visitor = {
         time: new Date().toLocaleString(),
         type: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile 📱" : "PC 💻",
-        device: navigator.userAgent
+        device: navigator.userAgent,
+        // 🌍 معلومات الموقع التقريبية (قانونية وأخلاقية)
+        country: location.country,
+        city: location.city,
+        region: location.region,
+        language: language,
+        timezone: timezone,
+        // إحداثيات تقريبية (ليست دقيقة)
+        latitude: location.lat,
+        longitude: location.lon
     };
 
     // 🔥 تسجيل في Firebase
