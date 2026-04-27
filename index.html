@@ -212,31 +212,133 @@ function showToast(message) {
 }
 
 // ==================================================
-// 📱 GET DEVICE NAME
+// 📱 IMPROVED DEVICE NAME - REAL BRAND & MODEL
 // ==================================================
 
 function getDeviceName() {
     const ua = navigator.userAgent;
     
-    if (ua.includes("iPhone15")) return "iPhone 15 Series";
-    if (ua.includes("iPhone14")) return "iPhone 14 Series";
-    if (ua.includes("iPhone13")) return "iPhone 13 Series";
-    if (ua.includes("iPhone12")) return "iPhone 12 Series";
-    if (ua.includes("iPhone11")) return "iPhone 11 Series";
-    if (ua.includes("iPhone X")) return "iPhone X";
-    if (ua.includes("iPhone")) return "iPhone";
-    if (ua.includes("iPad")) return "iPad";
-    if (ua.includes("SM-")) {
-        const match = ua.match(/SM-[A-Z0-9]+/);
-        if (match) return `Samsung ${match[0]}`;
+    // ========== APPLE iPHONE ==========
+    if (ua.includes("iPhone")) {
+        if (ua.includes("iPhone15,2") || ua.includes("iPhone15,3")) return "iPhone 15 Pro / Pro Max";
+        if (ua.includes("iPhone15,4") || ua.includes("iPhone15,5")) return "iPhone 15 / Plus";
+        if (ua.includes("iPhone14,2") || ua.includes("iPhone14,3")) return "iPhone 14 Pro / Pro Max";
+        if (ua.includes("iPhone14,4") || ua.includes("iPhone14,5")) return "iPhone 14 / Plus";
+        if (ua.includes("iPhone13,1")) return "iPhone 12 mini";
+        if (ua.includes("iPhone13,2")) return "iPhone 12";
+        if (ua.includes("iPhone13,3")) return "iPhone 12 Pro";
+        if (ua.includes("iPhone13,4")) return "iPhone 12 Pro Max";
+        if (ua.includes("iPhone12,1")) return "iPhone 11";
+        if (ua.includes("iPhone12,3")) return "iPhone 11 Pro";
+        if (ua.includes("iPhone12,5")) return "iPhone 11 Pro Max";
+        if (ua.includes("iPhone10,1") || ua.includes("iPhone10,4")) return "iPhone 8";
+        if (ua.includes("iPhone10,2") || ua.includes("iPhone10,5")) return "iPhone 8 Plus";
+        if (ua.includes("iPhone10,3") || ua.includes("iPhone10,6")) return "iPhone X";
+        if (ua.includes("iPhone11,2")) return "iPhone XS";
+        if (ua.includes("iPhone11,4") || ua.includes("iPhone11,6")) return "iPhone XS Max";
+        if (ua.includes("iPhone11,8")) return "iPhone XR";
+        return "iPhone";
     }
-    if (ua.includes("Pixel")) return "Google Pixel";
-    if (ua.includes("OnePlus")) return "OnePlus";
-    if (ua.includes("Mi ") || ua.includes("Redmi")) return "Xiaomi / Redmi";
-    if (ua.includes("Windows NT")) return "Windows PC / Laptop";
+    
+    // ========== APPLE iPAD ==========
+    if (ua.includes("iPad")) {
+        if (ua.includes("iPad13,4") || ua.includes("iPad13,5") || ua.includes("iPad13,6") || ua.includes("iPad13,7")) return "iPad Pro 11-inch (3rd gen)";
+        if (ua.includes("iPad13,8") || ua.includes("iPad13,9") || ua.includes("iPad13,10") || ua.includes("iPad13,11")) return "iPad Pro 12.9-inch (5th gen)";
+        return "iPad";
+    }
+    
+    // ========== SAMSUNG GALAXY ==========
+    const samsungMatch = ua.match(/SM-([A-Z0-9]+)/i);
+    if (samsungMatch) {
+        const model = samsungMatch[1];
+        if (model.startsWith("S91")) return "Samsung Galaxy S23 Ultra";
+        if (model.startsWith("S90")) return "Samsung Galaxy S23";
+        if (model.startsWith("S71")) return "Samsung Galaxy S22 Ultra";
+        if (model.startsWith("S70")) return "Samsung Galaxy S22";
+        if (model.startsWith("S21")) return "Samsung Galaxy S21";
+        if (model.startsWith("S20")) return "Samsung Galaxy S20";
+        if (model.startsWith("A")) return `Samsung Galaxy A${model.substring(1)}`;
+        if (model.startsWith("N")) return `Samsung Galaxy Note ${model.substring(1)}`;
+        return `Samsung Galaxy ${model}`;
+    }
+    
+    // ========== XIAOMI / REDMI / POCO ==========
+    if (ua.includes("Mi ") || ua.includes("Redmi") || ua.includes("POCO") || ua.includes("M2101") || ua.includes("2107")) {
+        if (ua.includes("Redmi Note 13")) return "Xiaomi Redmi Note 13";
+        if (ua.includes("Redmi Note 12")) return "Xiaomi Redmi Note 12";
+        if (ua.includes("Redmi Note 11")) return "Xiaomi Redmi Note 11";
+        if (ua.includes("Redmi Note 10")) return "Xiaomi Redmi Note 10";
+        if (ua.includes("Redmi Note 9")) return "Xiaomi Redmi Note 9";
+        if (ua.includes("Redmi Note 8")) return "Xiaomi Redmi Note 8";
+        if (ua.includes("Redmi Note 7")) return "Xiaomi Redmi Note 7";
+        if (ua.includes("Redmi 9")) return "Xiaomi Redmi 9";
+        if (ua.includes("Redmi 8")) return "Xiaomi Redmi 8";
+        if (ua.includes("Redmi 7")) return "Xiaomi Redmi 7";
+        if (ua.includes("Mi 11")) return "Xiaomi Mi 11";
+        if (ua.includes("Mi 10")) return "Xiaomi Mi 10";
+        if (ua.includes("Mi 9")) return "Xiaomi Mi 9";
+        if (ua.includes("POCO F")) return "Xiaomi POCO F Series";
+        if (ua.includes("POCO X")) return "Xiaomi POCO X Series";
+        if (ua.includes("POCO M")) return "Xiaomi POCO M Series";
+        return "Xiaomi Device";
+    }
+    
+    // ========== GOOGLE PIXEL ==========
+    if (ua.includes("Pixel")) {
+        if (ua.includes("Pixel 8")) return "Google Pixel 8";
+        if (ua.includes("Pixel 7")) return "Google Pixel 7";
+        if (ua.includes("Pixel 6")) return "Google Pixel 6";
+        if (ua.includes("Pixel 5")) return "Google Pixel 5";
+        if (ua.includes("Pixel 4")) return "Google Pixel 4";
+        return "Google Pixel";
+    }
+    
+    // ========== ONEPLUS ==========
+    if (ua.includes("OnePlus")) {
+        if (ua.includes("OnePlus 11")) return "OnePlus 11";
+        if (ua.includes("OnePlus 10")) return "OnePlus 10";
+        if (ua.includes("OnePlus 9")) return "OnePlus 9";
+        if (ua.includes("OnePlus 8")) return "OnePlus 8";
+        if (ua.includes("OnePlus Nord")) return "OnePlus Nord";
+        return "OnePlus";
+    }
+    
+    // ========== HUAWEI ==========
+    if (ua.includes("Huawei") || ua.includes("HW-")) {
+        if (ua.includes("P30")) return "Huawei P30";
+        if (ua.includes("P40")) return "Huawei P40";
+        if (ua.includes("Mate 20")) return "Huawei Mate 20";
+        if (ua.includes("Mate 30")) return "Huawei Mate 30";
+        return "Huawei";
+    }
+    
+    // ========== OPPO / VIVO ==========
+    if (ua.includes("OPPO")) return "OPPO";
+    if (ua.includes("vivo")) return "vivo";
+    if (ua.includes("Realme")) return "Realme";
+    if (ua.includes("Nokia")) return "Nokia";
+    if (ua.includes("LG-")) return "LG";
+    if (ua.includes("Sony")) return "Sony Xperia";
+    
+    // ========== WINDOWS PC ==========
+    if (ua.includes("Windows NT")) {
+        if (ua.includes("Touch")) return "Windows Tablet / Laptop";
+        return "Windows PC / Laptop";
+    }
+    
+    // ========== MAC ==========
     if (ua.includes("Mac OS X")) return "Apple Mac";
+    
+    // ========== LINUX ==========
     if (ua.includes("Linux") && !ua.includes("Android")) return "Linux Computer";
-    if (ua.includes("Android")) return "Android Device";
+    
+    // ========== ANDROID GENERIC ==========
+    if (ua.includes("Android")) {
+        const match = ua.match(/; (.+?) Build/);
+        if (match) return match[1];
+        return "Android Device";
+    }
+    
     return "Unknown Device";
 }
 
@@ -320,7 +422,7 @@ function getBasicDeviceInfo() {
 }
 
 // ==================================================
-// 🚀 ADVANCED DEVICE INFO (CPU, RAM, Battery, Network)
+// 🚀 ADVANCED DEVICE INFO
 // ==================================================
 
 async function getAdvancedDeviceInfo() {
@@ -372,16 +474,13 @@ async function getAdvancedDeviceInfo() {
 }
 
 // ==================================================
-// 🌍 IMPROVED LOCATION INFO - MULTIPLE APIs
+// 🌍 IMPROVED LOCATION INFO
 // ==================================================
 
 async function getLocationInfo() {
-    // المحاولة الأولى: ip-api.com (مجاني وسريع جداً)
+    // ip-api.com
     try {
-        const response = await fetch('http://ip-api.com/json/', {
-            mode: 'cors',
-            headers: { 'Content-Type': 'application/json' }
-        });
+        const response = await fetch('https://ip-api.com/json/');
         const data = await response.json();
         if (data && data.status === 'success') {
             console.log("✅ Location from ip-api.com:", data);
@@ -399,7 +498,7 @@ async function getLocationInfo() {
         }
     } catch(e) { console.log("ip-api.com failed:", e); }
     
-    // المحاولة الثانية: ipapi.co
+    // ipapi.co
     try {
         const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
@@ -419,7 +518,7 @@ async function getLocationInfo() {
         }
     } catch(e) { console.log("ipapi.co failed:", e); }
     
-    // المحاولة الثالثة: ipwho.is
+    // ipwho.is
     try {
         const response = await fetch('https://ipwho.is/');
         const data = await response.json();
@@ -438,26 +537,6 @@ async function getLocationInfo() {
             };
         }
     } catch(e) { console.log("ipwho.is failed:", e); }
-    
-    // المحاولة الرابعة: geoplugin.net
-    try {
-        const response = await fetch('http://www.geoplugin.net/json.gp');
-        const data = await response.json();
-        if (data && data.geoplugin_countryName) {
-            console.log("✅ Location from geoplugin:", data);
-            return {
-                country: data.geoplugin_countryName || "Unknown",
-                countryCode: data.geoplugin_countryCode || "UN",
-                city: data.geoplugin_city || "Unknown",
-                region: data.geoplugin_region || "Unknown",
-                postalCode: "",
-                isp: "Unknown",
-                latitude: data.geoplugin_latitude || null,
-                longitude: data.geoplugin_longitude || null,
-                source: 'geoplugin.net'
-            };
-        }
-    } catch(e) { console.log("geoplugin failed:", e); }
     
     console.log("⚠️ All location APIs failed");
     return {
@@ -507,7 +586,6 @@ async function registerAndNavigate() {
         btn.innerHTML = "⏳ PROCESSING...";
         btn.disabled = true;
         
-        // Get current time
         const now = new Date();
         const year = now.getFullYear();
         const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -520,20 +598,17 @@ async function registerAndNavigate() {
         const dateOnly = `${year}-${month}-${day}`;
         const timeOnly = `${hours}:${minutes}:${seconds}`;
         
-        // Get all info
         const basicInfo = getBasicDeviceInfo();
         const advancedInfo = await getAdvancedDeviceInfo();
-        const location = await getLocationInfo();  // المحسن
+        const location = await getLocationInfo();
         const fingerprint = generateFingerprint();
         
-        // Show location info to user
         if (location.country !== "Unknown") {
             showToast(`📍 ${location.country} - ${location.city} via ${location.isp?.substring(0, 20)}`);
         } else {
-            showToast(`⚠️ Location info unavailable - Check your connection`);
+            showToast(`⚠️ Location info unavailable`);
         }
         
-        // Get device stats
         const deviceStatsRef = ref(database, `deviceStats/${fingerprint}`);
         const snapshot = await get(deviceStatsRef);
         let visitCount = 1;
@@ -545,7 +620,6 @@ async function registerAndNavigate() {
             previousVisits = existingData.visits || [];
         }
         
-        // Prepare data
         const visitData = {
             visitId: `${fingerprint}_${Date.now()}`,
             timestamp: now.getTime(),
@@ -573,7 +647,6 @@ async function registerAndNavigate() {
             screenResolution: advancedInfo.screen.resolution,
             screenOrientation: advancedInfo.screen.orientation,
             
-            // LOCATION INFO (FIXED)
             country: location.country,
             countryCode: location.countryCode,
             city: location.city,
@@ -593,11 +666,9 @@ async function registerAndNavigate() {
         
         console.log("✅ Visit data prepared:", visitData);
         
-        // Save to Firebase
         const visitsRef = ref(database, "visits");
         await push(visitsRef, visitData);
         
-        // Update device stats
         const newVisitRecord = {
             timestamp: now.getTime(),
             dateTime: fullDateTime,
