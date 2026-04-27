@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard | Bahaa Tracking</title>
+<title>Admin Dashboard | Complete System</title>
 
 <style>
 * {
@@ -13,29 +13,11 @@
 }
 
 body {
-    font-family: 'Segoe UI', 'Poppins', system-ui, sans-serif;
+    font-family: 'Segoe UI', system-ui, sans-serif;
     background: radial-gradient(circle at 10% 20%, #0a0f1e, #03050b);
     color: #eee;
     min-height: 100vh;
     padding: 20px;
-}
-
-body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at 50% 50%, rgba(255,0,0,0.08), transparent);
-    pointer-events: none;
-    z-index: -1;
-    animation: pulseGlow 8s infinite;
-}
-
-@keyframes pulseGlow {
-    0% { opacity: 0.2; transform: scale(1);}
-    100% { opacity: 0.6; transform: scale(1.3);}
 }
 
 .container {
@@ -45,26 +27,25 @@ body::before {
 
 h1 {
     text-align: center;
-    font-size: clamp(24px, 5vw, 38px);
-    font-weight: 800;
+    font-size: 32px;
     background: linear-gradient(135deg, #ff4d4d, #ffbc00);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    flex-wrap: wrap;
+    margin-bottom: 10px;
 }
 
-h1::before { content: "🥋"; font-size: 40px; color: #ffaa55; }
-h1::after { content: "🏆"; font-size: 40px; color: #ffaa55; }
+.subtitle {
+    text-align: center;
+    color: #ffaa88;
+    margin-bottom: 30px;
+    font-size: 14px;
+}
 
+/* Stats Grid */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
     gap: 15px;
     margin-bottom: 30px;
 }
@@ -76,16 +57,10 @@ h1::after { content: "🏆"; font-size: 40px; color: #ffaa55; }
     padding: 15px;
     text-align: center;
     border: 1px solid rgba(255, 80, 80, 0.3);
-    transition: 0.3s;
-}
-
-.stat-card:hover {
-    transform: translateY(-3px);
-    border-color: #ffaa55;
 }
 
 .stat-number {
-    font-size: 2rem;
+    font-size: 32px;
     font-weight: bold;
     background: linear-gradient(135deg, #ff4d4d, #ffbc00);
     -webkit-background-clip: text;
@@ -94,11 +69,37 @@ h1::after { content: "🏆"; font-size: 40px; color: #ffaa55; }
 }
 
 .stat-label {
-    font-size: 0.7rem;
+    font-size: 11px;
     color: #ffaa88;
     margin-top: 5px;
 }
 
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 30px;
+    background: rgba(255, 80, 80, 0.2);
+    color: #ffaa88;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.tab-btn.active, .tab-btn:hover {
+    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
+    color: #000;
+}
+
+/* Filters */
 .filter-bar {
     display: flex;
     justify-content: center;
@@ -108,26 +109,29 @@ h1::after { content: "🏆"; font-size: 40px; color: #ffaa55; }
 }
 
 .filter-btn {
-    padding: 8px 16px;
+    padding: 6px 15px;
     border: none;
     border-radius: 30px;
     background: rgba(255, 80, 80, 0.2);
     color: #ffaa88;
     cursor: pointer;
     transition: 0.3s;
+    font-size: 12px;
 }
 
-.filter-btn:hover, .filter-btn.active {
+.filter-btn.active, .filter-btn:hover {
     background: linear-gradient(135deg, #ff4d4d, #ffaa00);
     color: #000;
 }
 
+/* Tables */
 .table-wrapper {
     background: rgba(12, 12, 20, 0.6);
     backdrop-filter: blur(12px);
     border-radius: 25px;
     overflow-x: auto;
     border: 1px solid rgba(255, 80, 80, 0.3);
+    margin-bottom: 30px;
 }
 
 table {
@@ -139,53 +143,107 @@ table {
 th {
     background: linear-gradient(135deg, #ff4d4d, #ffaa00);
     color: #000;
-    padding: 12px 8px;
-    font-weight: bold;
-    font-size: 0.7rem;
-    text-transform: uppercase;
+    padding: 10px 8px;
+    font-size: 11px;
     position: sticky;
     top: 0;
 }
 
 td {
-    padding: 12px 8px;
+    padding: 8px;
     text-align: center;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    font-size: 0.7rem;
-    vertical-align: middle;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
 }
 
 tr:hover td {
     background: rgba(255, 80, 80, 0.1);
 }
 
-.visit-count-badge {
+.badge {
     display: inline-block;
-    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
-    color: #000;
+    padding: 3px 8px;
+    border-radius: 20px;
+    font-size: 10px;
     font-weight: bold;
-    padding: 4px 10px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    min-width: 40px;
 }
 
-.visit-count-high {
-    background: linear-gradient(135deg, #ffaa00, #ff6600);
-    box-shadow: 0 0 10px rgba(255,170,0,0.5);
+.mobile { background: #4a4aff; }
+.tablet { background: #aa44aa; }
+.desktop { background: #00aa44; }
+
+.visit-count {
+    font-size: 16px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
-.country-cell {
+/* Buttons */
+.actions {
+    text-align: center;
+    margin-top: 20px;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 15px;
+    flex-wrap: wrap;
 }
 
-.country-flag {
-    font-size: 1.2rem;
+.action-btn {
+    padding: 10px 25px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
+.delete-all {
+    background: linear-gradient(135deg, #ff3b3b, #cc0000);
+    color: white;
+}
+
+.refresh {
+    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
+    color: black;
+}
+
+.back {
+    background: #2a2a4a;
+    color: #ffaa88;
+}
+
+.view-btn, .delete-btn {
+    padding: 4px 10px;
+    margin: 2px;
+    border-radius: 15px;
+    font-size: 10px;
+    cursor: pointer;
+    border: none;
+}
+
+.view-btn {
+    background: rgba(255,170,0,0.3);
+    color: #ffaa88;
+}
+
+.view-btn:hover {
+    background: #ffaa00;
+    color: #000;
+}
+
+.delete-btn {
+    background: rgba(255,50,50,0.3);
+    color: #ff8888;
+}
+
+.delete-btn:hover {
+    background: #ff3333;
+    color: #fff;
+}
+
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -201,59 +259,38 @@ tr:hover td {
 
 .modal-content {
     background: rgba(20,20,40,0.98);
-    backdrop-filter: blur(15px);
     border-radius: 30px;
     padding: 30px;
-    max-width: 550px;
+    max-width: 650px;
     width: 90%;
     max-height: 85%;
     overflow-y: auto;
     border: 2px solid #ffaa55;
-    box-shadow: 0 0 40px rgba(255,170,0,0.3);
 }
 
 .modal-content h3 {
     color: #ffaa66;
     margin-bottom: 20px;
     text-align: center;
-    font-size: 1.5rem;
 }
 
-.modal-content .detail-row {
+.detail-row {
     display: flex;
     justify-content: space-between;
-    padding: 10px 0;
+    padding: 8px 0;
     border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
-.modal-content .detail-label {
+.detail-label {
     font-weight: bold;
     color: #ffaa88;
     width: 40%;
 }
 
-.modal-content .detail-value {
-    color: #fff;
+.detail-value {
+    color: white;
     width: 55%;
-    word-break: break-word;
     text-align: left;
-}
-
-.close-modal {
-    display: block;
-    margin: 25px auto 0;
-    padding: 10px 25px;
-    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
-    border: none;
-    border-radius: 30px;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.close-modal:hover {
-    transform: scale(1.05);
 }
 
 .loading {
@@ -262,192 +299,114 @@ tr:hover td {
     color: #ffaa77;
 }
 
-.actions {
+.empty-state {
     text-align: center;
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    flex-wrap: wrap;
-}
-
-button {
-    padding: 10px 25px;
-    border: none;
-    border-radius: 50px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-}
-
-.clear {
-    background: linear-gradient(135deg, #ff3b3b, #cc0000);
-    color: white;
-}
-
-.back, .refresh {
-    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
-    color: #000;
-}
-
-.refresh {
-    background: linear-gradient(135deg, #2a2a4a, #1a1a3a);
+    padding: 40px;
     color: #ffaa88;
 }
 
-.badge {
-    display: inline-block;
-    padding: 2px 8px;
-    border-radius: 15px;
-    font-size: 0.65rem;
-    font-weight: bold;
-}
-
-.badge-return { background: #ffaa00; color: #000; }
-.badge-new { background: #00aa44; color: #fff; }
-.badge-mobile { background: #4a4aff; color: #fff; }
-.badge-desktop { background: #aa44aa; color: #fff; }
-
-.view-details {
-    background: rgba(255,170,0,0.3);
-    border: none;
-    padding: 4px 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.7rem;
-    color: #ffaa88;
-    transition: 0.2s;
-    margin-right: 5px;
-}
-
-.view-details:hover {
+.close-modal-btn {
+    display: block;
+    margin: 20px auto 0;
+    padding: 8px 20px;
     background: #ffaa00;
-    color: #000;
-}
-
-.delete-single {
-    background: rgba(255,50,50,0.3);
     border: none;
-    padding: 4px 12px;
-    border-radius: 20px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 0.7rem;
-    color: #ff8888;
-    transition: 0.2s;
-}
-
-.delete-single:hover {
-    background: #ff3333;
-    color: #fff;
-    box-shadow: 0 0 10px #ff3333;
-}
-
-.actions-cell {
-    display: flex;
-    gap: 5px;
-    justify-content: center;
-    flex-wrap: wrap;
-}
-
-.notification {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background: linear-gradient(135deg, #ff4d4d, #ffaa00);
-    color: #000;
-    padding: 12px 20px;
-    border-radius: 50px;
     font-weight: bold;
-    z-index: 1100;
-    animation: slideIn 0.5s ease, fadeOut 0.5s ease 3s forwards;
-    box-shadow: 0 0 20px rgba(255,80,80,0.5);
-}
-
-@keyframes slideIn {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
-}
-
-@keyframes fadeOut {
-    to { opacity: 0; visibility: hidden; }
-}
-
-@media (max-width: 768px) {
-    body { padding: 15px 10px; }
-    th, td { padding: 6px 4px; font-size: 0.55rem; }
-    .stat-number { font-size: 1.3rem; }
-    .filter-btn { padding: 5px 10px; font-size: 0.7rem; }
-    .modal-content .detail-label, .modal-content .detail-value { font-size: 0.75rem; }
-    .visit-count-badge { font-size: 0.65rem; padding: 2px 6px; }
-    .view-details, .delete-single { padding: 2px 6px; font-size: 0.6rem; }
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📊 ADMIN DASHBOARD | Visitor Analytics</h1>
+    <h1>📊 ADMIN DASHBOARD</h1>
+    <div class="subtitle">Complete Visitor Tracking System | Battery, CPU, RAM, Network Info</div>
 
+    <!-- Statistics -->
     <div class="stats-grid">
-        <div class="stat-card"><div class="stat-number" id="totalVisitors">0</div><div class="stat-label">Total Visitors</div></div>
-        <div class="stat-card"><div class="stat-number" id="todayVisitors">0</div><div class="stat-label">Today's Visitors</div></div>
-        <div class="stat-card"><div class="stat-number" id="mobileCount">0</div><div class="stat-label">Mobile 📱</div></div>
-        <div class="stat-card"><div class="stat-number" id="desktopCount">0</div><div class="stat-label">Desktop 💻</div></div>
-        <div class="stat-card"><div class="stat-number" id="returningCount">0</div><div class="stat-label">Returning 🔄</div></div>
-        <div class="stat-card"><div class="stat-number" id="countriesCount">0</div><div class="stat-label">Countries 🌍</div></div>
-        <div class="stat-card"><div class="stat-number" id="ispCount">0</div><div class="stat-label">ISPs</div></div>
-        <div class="stat-card"><div class="stat-number" id="totalVisitsCount">0</div><div class="stat-label">Total Visits 🔄</div></div>
+        <div class="stat-card"><div class="stat-number" id="totalDevices">0</div><div class="stat-label">Unique Devices</div></div>
+        <div class="stat-card"><div class="stat-number" id="totalVisits">0</div><div class="stat-label">Total Visits</div></div>
+        <div class="stat-card"><div class="stat-number" id="todayVisits">0</div><div class="stat-label">Today's Visits</div></div>
+        <div class="stat-card"><div class="stat-number" id="mobileDevices">0</div><div class="stat-label">Mobile Devices</div></div>
+        <div class="stat-card"><div class="stat-number" id="tabletDevices">0</div><div class="stat-label">Tablet Devices</div></div>
+        <div class="stat-card"><div class="stat-number" id="desktopDevices">0</div><div class="stat-label">Desktop Devices</div></div>
     </div>
 
-    <div class="filter-bar">
-        <button class="filter-btn active" data-filter="all">All</button>
-        <button class="filter-btn" data-filter="mobile">Mobile Only</button>
-        <button class="filter-btn" data-filter="desktop">Desktop Only</button>
-        <button class="filter-btn" data-filter="returning">Returning Only</button>
-        <button class="filter-btn" data-filter="today">Today Only</button>
-        <button class="filter-btn" data-filter="highVisits">High Visits (>5)</button>
+    <!-- Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="devices">📱 Devices & Statistics</button>
+        <button class="tab-btn" data-tab="visits">📋 All Visits History</button>
     </div>
 
-    <div class="table-wrapper">
+    <!-- Device Filters -->
+    <div class="filter-bar" id="deviceFilters">
+        <button class="filter-btn active" data-device-filter="all">All Devices</button>
+        <button class="filter-btn" data-device-filter="Mobile">Mobile 📱</button>
+        <button class="filter-btn" data-device-filter="Tablet">Tablet 📱💻</button>
+        <button class="filter-btn" data-device-filter="Desktop">Desktop 💻</button>
+    </div>
+
+    <!-- Devices Table -->
+    <div id="devicesTab" class="table-wrapper">
         <table>
             <thead>
                 <tr>
-                    <th>⏱️ Time</th>
-                    <th>📱 Device</th>
-                    <th>💻 OS / Browser</th>
-                    <th>🌍 Country / City</th>
-                    <th>📡 ISP</th>
-                    <th>🔄 Visits Count</th>
-                    <th>📶 Connection / Screen</th>
-                    <th>⚡ Actions</th>
+                    <th>Device Info</th>
+                    <th>OS / Browser</th>
+                    <th>Location</th>
+                    <th>CPU / RAM</th>
+                    <th>Visit Count</th>
+                    <th>First Visit</th>
+                    <th>Last Visit</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody id="dataTable"></tbody>
+            <tbody id="devicesTable"></tbody>
         </table>
     </div>
 
-    <div class="loading" id="loading">📡 Loading data...</div>
+    <!-- Visits Table -->
+    <div id="visitsTab" class="table-wrapper" style="display: none;">
+        <table>
+            <thead>
+                <tr>
+                    <th>Date & Time</th>
+                    <th>Device</th>
+                    <th>OS / Browser</th>
+                    <th>Location</th>
+                    <th>ISP / Network</th>
+                    <th>Battery</th>
+                    <th>Visit #</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="visitsTable"></tbody>
+        </table>
+    </div>
+
+    <div class="loading" id="loading">Loading data...</div>
 
     <div class="actions">
-        <button class="refresh" onclick="location.reload()">🔄 Refresh</button>
-        <button class="clear" onclick="clearData()">🗑️ Delete All</button>
-        <button class="back" onclick="window.location.href='index.html'">🔙 Back</button>
+        <button class="action-btn refresh" onclick="location.reload()">🔄 Refresh</button>
+        <button class="action-btn delete-all" onclick="deleteAllData()">🗑️ Delete All Data</button>
+        <button class="action-btn back" onclick="window.location.href='index.html'">🔙 Back to Home</button>
     </div>
 </div>
 
+<!-- Modal -->
 <div class="modal" id="detailsModal">
     <div class="modal-content">
-        <h3>📋 Visitor Full Details</h3>
+        <h3>📋 Complete Device Details</h3>
         <div id="modalDetails"></div>
-        <button class="close-modal" onclick="closeModal()">Close</button>
+        <button class="close-modal-btn" onclick="closeModal()">Close</button>
     </div>
 </div>
 
 <script type="module">
 
 // ==================================================
-// 🔧 Firebase Configuration - PUT YOUR REAL KEYS HERE
+// FIREBASE CONFIGURATION - PUT YOUR REAL KEYS HERE
 // ==================================================
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -460,180 +419,204 @@ const firebaseConfig = {
 };
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, onValue, remove, child } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+import { getDatabase, ref, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-let allVisitors = [];
-let currentFilter = 'all';
-let previousCount = 0;
+let allDevices = [];
+let allVisits = [];
+let currentTab = "devices";
+let currentDeviceFilter = "all";
 
-const countryFlags = {
-    'Algeria': '🇩🇿', 'France': '🇫🇷', 'Tunisia': '🇹🇳', 'Morocco': '🇲🇦',
-    'Egypt': '🇪🇬', 'Saudi Arabia': '🇸🇦', 'USA': '🇺🇸', 'Canada': '🇨🇦',
-    'Germany': '🇩🇪', 'Italy': '🇮🇹', 'Spain': '🇪🇸', 'UK': '🇬🇧',
-    'Turkey': '🇹🇷', 'UAE': '🇦🇪', 'Qatar': '🇶🇦', 'Kuwait': '🇰🇼',
-    'Russia': '🇷🇺', 'China': '🇨🇳', 'Japan': '🇯🇵', 'Brazil': '🇧🇷',
-    'Australia': '🇦🇺', 'Netherlands': '🇳🇱', 'Sweden': '🇸🇪', 'Norway': '🇳🇴',
-    'Switzerland': '🇨🇭', 'Belgium': '🇧🇪', 'Portugal': '🇵🇹', 'Greece': '🇬🇷',
-    'Libya': '🇱🇾', 'Mauritania': '🇲🇷', 'Sudan': '🇸🇩', 'Palestine': '🇵🇸',
-    'Jordan': '🇯🇴', 'Lebanon': '🇱🇧', 'Iraq': '🇮🇶', 'Syria': '🇸🇾', 'Unknown': '🌍'
-};
+// ==================================================
+// HELPER FUNCTIONS
+// ==================================================
 
 function getFlag(country) {
-    if (!country) return '🌍';
-    for (const [c, flag] of Object.entries(countryFlags)) {
-        if (country.includes(c)) return flag;
+    const flags = {
+        'Algeria':'🇩🇿','France':'🇫🇷','Tunisia':'🇹🇳','Morocco':'🇲🇦',
+        'Egypt':'🇪🇬','Saudi Arabia':'🇸🇦','USA':'🇺🇸','Canada':'🇨🇦',
+        'Germany':'🇩🇪','Italy':'🇮🇹','Spain':'🇪🇸','UK':'🇬🇧',
+        'Turkey':'🇹🇷','UAE':'🇦🇪','Qatar':'🇶🇦','Kuwait':'🇰🇼',
+        'Russia':'🇷🇺','China':'🇨🇳','Japan':'🇯🇵','Brazil':'🇧🇷',
+        'Australia':'🇦🇺','Netherlands':'🇳🇱','Sweden':'🇸🇪'
+    };
+    for (let [c, f] of Object.entries(flags)) {
+        if (country && country.includes(c)) return f;
     }
     return '🌍';
 }
 
-function showNotification(message, isError = false) {
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.innerHTML = message;
-    if (isError) {
-        notification.style.background = "linear-gradient(135deg, #cc0000, #ff3333)";
-    }
-    notification.style.animation = 'slideIn 0.5s ease, fadeOut 0.5s ease 2.5s forwards';
-    document.body.appendChild(notification);
-    setTimeout(() => {
-        if (notification && notification.remove) notification.remove();
-    }, 3000);
+function getDeviceClass(deviceType) {
+    if (deviceType === 'Mobile') return 'mobile';
+    if (deviceType === 'Tablet') return 'tablet';
+    return 'desktop';
 }
 
-function updateStats(visitors) {
-    const total = visitors.length;
-    const today = new Date().toLocaleDateString();
-    const todayCount = visitors.filter(v => v.time && new Date(v.time).toLocaleDateString() === today).length;
-    const mobileCount = visitors.filter(v => v.deviceType === 'Mobile' || (v.deviceType && v.deviceType.includes('Mobile'))).length;
-    const desktopCount = total - mobileCount;
-    const returningCount = visitors.filter(v => v.isReturning === true).length;
-    const uniqueCountries = new Set(visitors.map(v => v.country).filter(c => c && c !== 'Unknown')).size;
-    const uniqueISPs = new Set(visitors.map(v => v.isp).filter(isp => isp && isp !== "Unknown" && isp !== "-")).size;
-    const totalVisitsCount = visitors.reduce((sum, v) => sum + (v.visitCount || 1), 0);
+function updateStats() {
+    const uniqueDevices = allDevices.length;
+    const totalVisits = allVisits.length;
+    const today = new Date().toISOString().split('T')[0];
+    const todayVisits = allVisits.filter(v => v.date === today).length;
+    const mobile = allDevices.filter(d => d.deviceType === 'Mobile').length;
+    const tablet = allDevices.filter(d => d.deviceType === 'Tablet').length;
+    const desktop = allDevices.filter(d => d.deviceType === 'Desktop').length;
     
-    document.getElementById('totalVisitors').innerHTML = total;
-    document.getElementById('todayVisitors').innerHTML = todayCount;
-    document.getElementById('mobileCount').innerHTML = mobileCount;
-    document.getElementById('desktopCount').innerHTML = desktopCount;
-    document.getElementById('returningCount').innerHTML = returningCount;
-    document.getElementById('countriesCount').innerHTML = uniqueCountries;
-    document.getElementById('ispCount').innerHTML = uniqueISPs;
-    document.getElementById('totalVisitsCount').innerHTML = totalVisitsCount;
-    
-    if (visitors.length > previousCount && previousCount > 0) {
-        const newVisitor = visitors[0];
-        if (newVisitor) {
-            showNotification(`🆕 New Visitor! ${getFlag(newVisitor.country)} ${newVisitor.country || 'Unknown'} - ${newVisitor.city || 'Unknown'}`);
-        }
-    }
-    previousCount = visitors.length;
+    document.getElementById('totalDevices').innerHTML = uniqueDevices;
+    document.getElementById('totalVisits').innerHTML = totalVisits;
+    document.getElementById('todayVisits').innerHTML = todayVisits;
+    document.getElementById('mobileDevices').innerHTML = mobile;
+    document.getElementById('tabletDevices').innerHTML = tablet;
+    document.getElementById('desktopDevices').innerHTML = desktop;
 }
 
-window.showDetails = function(visitor) {
-    const modal = document.getElementById('detailsModal');
-    const modalDetails = document.getElementById('modalDetails');
-    const visitCountClass = (visitor.visitCount || 1) > 3 ? 'visit-count-high' : '';
-    
-    modalDetails.innerHTML = `
-        <div class="detail-row"><span class="detail-label">📅 Date & Time:</span><span class="detail-value">${visitor.time || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🕐 Timestamp:</span><span class="detail-value">${visitor.timestamp || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🌍 Country:</span><span class="detail-value"><span class="country-flag">${getFlag(visitor.country)}</span> ${visitor.country || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🏙️ City:</span><span class="detail-value">${visitor.city || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">📍 Region:</span><span class="detail-value">${visitor.region || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">📡 ISP (Provider):</span><span class="detail-value"><strong style="color:#ffaa55;">${visitor.isp || 'Unknown'}</strong></span></div>
-        <div class="detail-row"><span class="detail-label">📱 Device Type:</span><span class="detail-value">${visitor.deviceType || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">💻 Operating System:</span><span class="detail-value">${visitor.operatingSystem || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🌐 Browser:</span><span class="detail-value">${visitor.browser || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🖥️ Screen Resolution:</span><span class="detail-value">${visitor.screenResolution || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">📶 Connection Type:</span><span class="detail-value">${visitor.connectionType || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🌐 Language:</span><span class="detail-value">${visitor.language || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">⏰ Timezone:</span><span class="detail-value">${visitor.timezone || '-'}</span></div>
-        <div class="detail-row"><span class="detail-label">🔄 Visit Count:</span><span class="detail-value"><span class="visit-count-badge ${visitCountClass}">${visitor.visitCount || 1} times</span></span></div>
-        <div class="detail-row"><span class="detail-label">🏷️ Returning Visitor:</span><span class="detail-value">${visitor.isReturning ? '✅ Yes' : '❌ No (First visit)'}</span></div>
-        <div class="detail-row"><span class="detail-label">🔑 Fingerprint:</span><span class="detail-value"><small>${visitor.fingerprint || '-'}</small></span></div>
-        <div class="detail-row"><span class="detail-label">📝 User Agent:</span><span class="detail-value"><small>${visitor.userAgent ? visitor.userAgent.substring(0, 120) + '...' : '-'}</small></span></div>
+// ==================================================
+// SHOW COMPLETE DEVICE DETAILS (BATTERY, CPU, RAM, ETC)
+// ==================================================
+
+window.showDeviceDetails = (device) => {
+    let html = `
+        <div class="detail-row"><span class="detail-label">📱 Device Type:</span><span class="detail-value">${device.deviceType || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🏷️ Brand / Model:</span><span class="detail-value">${device.deviceBrand || '-'} ${device.deviceModel || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">💻 Operating System:</span><span class="detail-value">${device.operatingSystem || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🌐 Browser:</span><span class="detail-value">${device.browser || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🖥️ Screen Resolution:</span><span class="detail-value">${device.screenResolution || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">⚙️ CPU / Processor:</span><span class="detail-value">${device.cpuCores || '?'} cores (${device.cpuArchitecture || 'Unknown'})</span></div>
+        <div class="detail-row"><span class="detail-label">💾 RAM Memory:</span><span class="detail-value">${device.ram || 'Unknown'}</span></div>
+        <div class="detail-row"><span class="detail-label">🔋 Battery Level:</span><span class="detail-value">${device.batteryLevel || 'Unknown'}</span></div>
+        <div class="detail-row"><span class="detail-label">🔌 Charging Status:</span><span class="detail-value">${device.isCharging || 'Unknown'}</span></div>
+        <div class="detail-row"><span class="detail-label">📡 Network Type:</span><span class="detail-value">${device.connectionType || 'Unknown'}</span></div>
+        <div class="detail-row"><span class="detail-label">🌍 Country:</span><span class="detail-value">${getFlag(device.country)} ${device.country || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🏙️ City:</span><span class="detail-value">${device.city || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">📡 ISP Provider:</span><span class="detail-value">${device.isp || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🌐 Language:</span><span class="detail-value">${device.language || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">⏰ Timezone:</span><span class="detail-value">${device.timezone || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🔄 Total Visits:</span><span class="detail-value"><span class="visit-count">${device.visitCount || 0}</span></span></div>
+        <div class="detail-row"><span class="detail-label">📅 First Visit:</span><span class="detail-value">${device.firstVisit || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">📅 Last Visit:</span><span class="detail-value">${device.lastVisit || '-'}</span></div>
     `;
-    modal.style.display = 'flex';
-}
+    document.getElementById('modalDetails').innerHTML = html;
+    document.getElementById('detailsModal').style.display = 'flex';
+};
 
-window.closeModal = function() {
+window.showVisitDetails = (visit) => {
+    let html = `
+        <div class="detail-row"><span class="detail-label">📅 Visit Time:</span><span class="detail-value">${visit.dateTime || visit.date + ' ' + visit.time}</span></div>
+        <div class="detail-row"><span class="detail-label">📱 Device Type:</span><span class="detail-value">${visit.deviceType || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🏷️ Device Model:</span><span class="detail-value">${visit.deviceBrand || ''} ${visit.deviceModel || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">💻 Operating System:</span><span class="detail-value">${visit.fullOS || visit.operatingSystem || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🌐 Browser:</span><span class="detail-value">${visit.fullBrowser || visit.browser || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🖥️ Screen:</span><span class="detail-value">${visit.screenResolution || '-'} (${visit.screenOrientation || '-'})</span></div>
+        <div class="detail-row"><span class="detail-label">⚙️ CPU:</span><span class="detail-value">${visit.cpuCores || '?'} cores (${visit.cpuArchitecture || 'Unknown'})</span></div>
+        <div class="detail-row"><span class="detail-label">💾 RAM:</span><span class="detail-value">${visit.ram || 'Unknown'}</span></div>
+        <div class="detail-row"><span class="detail-label">🔋 Battery:</span><span class="detail-value">${visit.batteryLevel || 'Unknown'} (Charging: ${visit.isCharging || 'Unknown'})</span></div>
+        <div class="detail-row"><span class="detail-label">📡 Network:</span><span class="detail-value">${visit.connectionType || '-'} (${visit.connectionSpeed || '-'})</span></div>
+        <div class="detail-row"><span class="detail-label">🌍 Country:</span><span class="detail-value">${getFlag(visit.country)} ${visit.country || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🏙️ City / Region:</span><span class="detail-value">${visit.city || '-'} / ${visit.region || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">📡 ISP:</span><span class="detail-value">${visit.isp || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🌐 Language:</span><span class="detail-value">${visit.language || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">⏰ Timezone:</span><span class="detail-value">${visit.timezone || '-'}</span></div>
+        <div class="detail-row"><span class="detail-label">🔢 Visit Number:</span><span class="detail-value">#${visit.visitNumber || 1}</span></div>
+    `;
+    document.getElementById('modalDetails').innerHTML = html;
+    document.getElementById('detailsModal').style.display = 'flex';
+};
+
+window.closeModal = () => {
     document.getElementById('detailsModal').style.display = 'none';
-}
+};
 
 // ==================================================
-// 🗑️ NEW: Delete single visitor
+// DELETE FUNCTIONS
 // ==================================================
-window.deleteVisitor = function(visitorId, visitorName) {
-    if(confirm(`⚠️ Are you sure you want to delete visitor from ${visitorName || 'Unknown'}? This cannot be undone!`)) {
-        const visitorRef = ref(db, `visitors/${visitorId}`);
-        remove(visitorRef).then(() => {
-            showNotification(`🗑️ Visitor from ${visitorName || 'Unknown'} has been deleted!`);
-        }).catch((error) => {
-            console.error("Error deleting visitor:", error);
-            showNotification(`❌ Error deleting visitor: ${error.message}`, true);
+
+window.deleteDevice = (fingerprint, deviceName) => {
+    if(confirm(`⚠️ Delete ALL data for device: ${deviceName}? This will remove all visits from this device.`)) {
+        remove(ref(db, `deviceStats/${fingerprint}`));
+        const visitsToDelete = allVisits.filter(v => v.deviceFingerprint === fingerprint);
+        visitsToDelete.forEach(visit => {
+            if(visit.id) remove(ref(db, `visits/${visit.id}`));
         });
     }
-}
+};
 
-function renderTable() {
-    const tbody = document.getElementById('dataTable');
+window.deleteVisit = (id, visitTime) => {
+    if(confirm(`⚠️ Delete visit from ${visitTime}?`)) {
+        remove(ref(db, `visits/${id}`));
+    }
+};
+
+window.deleteAllData = () => {
+    if(confirm('⚠️ DELETE ALL DATA (all devices and all visits)? This cannot be undone!')) {
+        remove(ref(db, 'deviceStats'));
+        remove(ref(db, 'visits'));
+    }
+};
+
+// ==================================================
+// RENDER FUNCTIONS
+// ==================================================
+
+function renderDevices() {
+    const tbody = document.getElementById('devicesTable');
     tbody.innerHTML = '';
     
-    let filtered = [...allVisitors];
-    
-    if (currentFilter === 'mobile') {
-        filtered = filtered.filter(v => v.deviceType === 'Mobile' || (v.deviceType && v.deviceType.includes('Mobile')));
-    } else if (currentFilter === 'desktop') {
-        filtered = filtered.filter(v => v.deviceType === 'Desktop' || (v.deviceType && v.deviceType.includes('Desktop')));
-    } else if (currentFilter === 'returning') {
-        filtered = filtered.filter(v => v.isReturning === true);
-    } else if (currentFilter === 'today') {
-        const today = new Date().toLocaleDateString();
-        filtered = filtered.filter(v => v.time && new Date(v.time).toLocaleDateString() === today);
-    } else if (currentFilter === 'highVisits') {
-        filtered = filtered.filter(v => (v.visitCount || 1) > 5);
+    let filtered = [...allDevices];
+    if (currentDeviceFilter !== 'all') {
+        filtered = filtered.filter(d => d.deviceType === currentDeviceFilter);
     }
     
     if (filtered.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="8" style="padding:40px;text-align:center;">✨ No visitors recorded yet ✨</td></tr>';
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No devices recorded yet</td></tr>';
         return;
     }
     
-    filtered.forEach((v) => {
-        const returnBadge = v.isReturning ? '<span class="badge badge-return">🔄 Returning</span>' : '<span class="badge badge-new">✨ New</span>';
-        const deviceBadge = v.deviceType === 'Mobile' ? '<span class="badge badge-mobile">📱 Mobile</span>' : '<span class="badge badge-desktop">💻 Desktop</span>';
-        const visitCount = v.visitCount || 1;
-        const visitCountClass = visitCount > 3 ? 'visit-count-high' : '';
-        const visitCountDisplay = visitCount > 1 ? `${visitCount} times` : `${visitCount} time`;
-        
-        let ispShort = v.isp || '-';
-        if (ispShort.length > 22) ispShort = ispShort.substring(0, 20) + '...';
-        
-        const visitorLocation = `${v.country || 'Unknown'} - ${v.city || 'Unknown'}`;
-        
+    filtered.forEach(device => {
+        const deviceName = `${device.deviceBrand || ''} ${device.deviceModel || device.deviceType || 'Device'}`;
         tbody.innerHTML += `
             <tr>
-                <td style="font-size:9px;">${v.time || '-'}</td>
-                <td>${deviceBadge}</td>
-                <td>${v.operatingSystem || '-'}<br><small>${v.browser || '-'}</small></td>
-                <td class="country-cell">
-                    <span class="country-flag">${getFlag(v.country)}</span>
-                    ${v.country || '-'}<br>
-                    <small>📍 ${v.city || '-'}</small><br>
-                    <small>${v.language || '-'}</small>
+                <td style="text-align:left">
+                    <strong>${device.deviceType || '-'}</strong><br>
+                    <small>${device.deviceBrand || ''} ${device.deviceModel || ''}</small>
                 </td>
-                <td style="text-align:left; direction:ltr;"><strong style="color:#ffaa55;">${ispShort}</strong><br><small>${v.connectionType || '-'}</small></td>
+                <td>${device.operatingSystem || '-'}<br><small>${device.browser || '-'}</small></td>
+                <td>${getFlag(device.country)} ${device.country || '-'}<br><small>📍 ${device.city || '-'}</small></td>
+                <td><small>⚙️ ${device.cpuCores || '?'} cores<br>💾 ${device.ram || '?'}</small></td>
+                <td><span class="visit-count">${device.visitCount || 0}</span></td>
+                <td style="font-size:10px">${device.firstVisit || '-'}</td>
+                <td style="font-size:10px">${device.lastVisit || '-'}</td>
                 <td>
-                    <span class="visit-count-badge ${visitCountClass}">${visitCountDisplay}</span><br>
-                    ${returnBadge}
+                    <button class="view-btn" onclick='showDeviceDetails(${JSON.stringify(device).replace(/'/g, "&#39;")})'>View</button>
+                    <button class="delete-btn" onclick='deleteDevice("${device.deviceFingerprint}", "${deviceName.replace(/"/g, '')}")'>Delete</button>
                 </td>
-                <td>${v.screenResolution || '-'}<br><small>${v.timezone ? v.timezone.substring(0, 12) : '-'}</small></td>
-                <td class="actions-cell">
-                    <button class="view-details" onclick='showDetails(${JSON.stringify(v).replace(/'/g, "&#39;")})'>🔍 View</button>
-                    <button class="delete-single" onclick='deleteVisitor("${v.id}", "${visitorLocation.replace(/"/g, '&quot;')}")'>🗑️ Delete</button>
+            </tr>
+        `;
+    });
+}
+
+function renderVisits() {
+    const tbody = document.getElementById('visitsTable');
+    tbody.innerHTML = '';
+    
+    if (allVisits.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="8" class="empty-state">No visits recorded yet</td></tr>';
+        return;
+    }
+    
+    allVisits.forEach(visit => {
+        tbody.innerHTML += `
+            <tr>
+                <td style="font-size:10px">${visit.dateTime || visit.date + ' ' + visit.time}</td>
+                <td><span class="badge ${getDeviceClass(visit.deviceType)}">${visit.deviceType || '-'}</span><br><small>${visit.deviceModel || ''}</small></td>
+                <td>${visit.fullOS || visit.operatingSystem || '-'}<br><small>${visit.fullBrowser || visit.browser || '-'}</small></td>
+                <td>${getFlag(visit.country)} ${visit.country || '-'}<br><small>${visit.city || '-'}</small></td>
+                <td><small>${(visit.isp || '-').substring(0,15)}<br>${visit.connectionType || '-'}</small></td>
+                <td><small>🔋 ${visit.batteryLevel || '?'}<br>⚡ ${visit.isCharging || '?'}</small></td>
+                <td><span class="visit-count">#${visit.visitNumber || 1}</span></td>
+                <td>
+                    <button class="view-btn" onclick='showVisitDetails(${JSON.stringify(visit).replace(/'/g, "&#39;")})'>View</button>
+                    <button class="delete-btn" onclick='deleteVisit("${visit.id}", "${visit.dateTime || visit.date}")'>Delete</button>
                 </td>
             </tr>
         `;
@@ -641,62 +624,80 @@ function renderTable() {
 }
 
 // ==================================================
-// Load data with real-time updates
+// LOAD DATA FROM FIREBASE
 // ==================================================
+
 function loadData() {
     document.getElementById('loading').style.display = 'block';
-    const visitorsRef = ref(db, 'visitors');
     
-    onValue(visitorsRef, (snapshot) => {
-        document.getElementById('loading').style.display = 'none';
-        
-        if (!snapshot.exists()) {
-            allVisitors = [];
-            document.getElementById('dataTable').innerHTML = '<tr><td colspan="8" style="padding:40px;text-align:center;">✨ No visitors recorded yet ✨</td></tr>';
-            updateStats([]);
-            return;
+    // Load devices (deviceStats)
+    onValue(ref(db, 'deviceStats'), (snapshot) => {
+        allDevices = [];
+        if(snapshot.exists()) {
+            snapshot.forEach(child => {
+                allDevices.push({ id: child.key, ...child.val() });
+            });
+            allDevices.sort((a,b) => (b.visitCount||0) - (a.visitCount||0));
         }
         
-        allVisitors = [];
-        snapshot.forEach(child => {
-            allVisitors.push({ id: child.key, ...child.val() });
+        // Load visits
+        onValue(ref(db, 'visits'), (snapshot2) => {
+            document.getElementById('loading').style.display = 'none';
+            allVisits = [];
+            if(snapshot2.exists()) {
+                snapshot2.forEach(child => {
+                    allVisits.push({ id: child.key, ...child.val() });
+                });
+                allVisits.sort((a,b) => (b.timestamp||0) - (a.timestamp||0));
+            }
+            updateStats();
+            renderDevices();
+            renderVisits();
         });
-        
-        allVisitors.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-        
-        updateStats(allVisitors);
-        renderTable();
     });
 }
 
 // ==================================================
-// Clear ALL data
+// TAB SWITCHING
 // ==================================================
-window.clearData = function() {
-    if(confirm('⚠️ Are you sure you want to delete ALL visitor data? This cannot be undone!')) {
-        const visitorsRef = ref(db, 'visitors');
-        remove(visitorsRef).then(() => {
-            showNotification('🗑️ All visitor data has been deleted successfully!');
-            allVisitors = [];
-            updateStats([]);
-            renderTable();
-        }).catch((error) => {
-            console.error("Error deleting data:", error);
-            showNotification('❌ Error deleting data: ' + error.message, true);
-        });
-    }
-}
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll('.tab-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        currentFilter = btn.getAttribute('data-filter');
-        renderTable();
+        currentTab = btn.dataset.tab;
+        
+        if (currentTab === 'devices') {
+            document.getElementById('devicesTab').style.display = 'block';
+            document.getElementById('visitsTab').style.display = 'none';
+            document.getElementById('deviceFilters').style.display = 'flex';
+        } else {
+            document.getElementById('devicesTab').style.display = 'none';
+            document.getElementById('visitsTab').style.display = 'block';
+            document.getElementById('deviceFilters').style.display = 'none';
+        }
     });
 });
 
+// ==================================================
+// DEVICE FILTERS
+// ==================================================
+
+document.querySelectorAll('[data-device-filter]').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('[data-device-filter]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentDeviceFilter = btn.dataset.deviceFilter;
+        renderDevices();
+    });
+});
+
+// ==================================================
+// START
+// ==================================================
+
 loadData();
+
 </script>
 </body>
 </html>
