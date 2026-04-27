@@ -94,7 +94,7 @@ header h1 {
 }
 
 /* ================================================== */
-/* 🎵 مشغل الموسيقى - ثابت ومناسب للهواتف والحواسيب 🎵 */
+/* 🎵 مشغل الموسيقى مع زر إيقاف وتشغيل 🎵 */
 /* ================================================== */
 
 .audio-player-wrapper {
@@ -122,7 +122,7 @@ header h1 {
     border: 1px solid rgba(255, 80, 80, 0.5);
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 80, 80, 0.2);
     width: auto;
-    min-width: 280px;
+    min-width: 320px;
     transition: all 0.3s ease;
 }
 
@@ -172,54 +172,53 @@ header h1 {
     opacity: 0.8;
 }
 
-.music-player audio {
-    height: 35px;
-    width: 200px;
-    border-radius: 45px;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.music-player audio::-webkit-media-controls-panel {
-    background: linear-gradient(135deg, #1a0f25, #0a0a1a);
-    border-radius: 45px;
-}
-
-.music-player audio::-webkit-media-controls-play-button {
-    background-color: #ff4d4d;
-    border-radius: 50%;
-    transition: transform 0.2s;
-}
-
-.music-player audio::-webkit-media-controls-play-button:hover {
-    background-color: #ffaa55;
-    transform: scale(1.1);
-}
-
-.music-player audio::-webkit-media-controls-current-time-display,
-.music-player audio::-webkit-media-controls-time-remaining-display {
-    color: #ffaa88;
-    font-weight: bold;
-    font-size: 10px;
-}
-
-.music-toggle {
+/* زر التحكم الرئيسي */
+.music-control-btn {
     background: linear-gradient(135deg, #ff4d4d, #ffaa00);
     border: none;
-    border-radius: 50%;
-    width: 36px;
-    height: 36px;
-    font-size: 1.1rem;
+    border-radius: 40px;
+    padding: 8px 18px;
+    font-size: 0.9rem;
+    font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
     color: white;
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
-.music-toggle:hover {
+.music-control-btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 10px #ffaa55;
+    box-shadow: 0 0 15px #ffaa55;
+}
+
+.music-control-btn:active {
+    transform: scale(0.98);
+}
+
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0,0,0,0.4);
+    padding: 5px 12px;
+    border-radius: 30px;
+}
+
+.volume-control span {
+    font-size: 0.8rem;
+    color: #ffaa88;
+}
+
+.volume-slider {
+    width: 80px;
+    height: 4px;
+    cursor: pointer;
+    background: #ff4d4d;
+    border-radius: 5px;
+    accent-color: #ffaa00;
 }
 
 /* تحسين للشاشات الصغيرة (الهواتف) */
@@ -230,7 +229,7 @@ header h1 {
     .music-player {
         padding: 6px 12px;
         gap: 8px;
-        min-width: 260px;
+        min-width: 290px;
     }
     .music-info {
         gap: 6px;
@@ -240,19 +239,21 @@ header h1 {
         gap: 3px;
     }
     .song-title-main {
-        font-size: 0.7rem;
+        font-size: 0.65rem;
     }
     .song-artist {
-        font-size: 0.55rem;
+        font-size: 0.5rem;
     }
-    .music-player audio {
-        width: 140px;
-        height: 32px;
+    .music-control-btn {
+        padding: 5px 12px;
+        font-size: 0.7rem;
+        gap: 4px;
     }
-    .music-toggle {
-        width: 30px;
-        height: 30px;
-        font-size: 0.9rem;
+    .volume-control {
+        padding: 3px 8px;
+    }
+    .volume-slider {
+        width: 50px;
     }
 }
 
@@ -589,8 +590,7 @@ header h1 {
 </header>
 
 <!-- ================================================== -->
-<!-- 🎵 مشغل الموسيقى - ثابت ومناسب للهواتف والحواسيب 🎵 -->
-<!-- التشغيل التلقائي فور دخول الصفحة -->
+<!-- 🎵 مشغل الموسيقى - زر إيقاف وتشغيل وتحكم بالصوت 🎵 -->
 <!-- ================================================== -->
 
 <div class="audio-player-wrapper">
@@ -606,13 +606,25 @@ header h1 {
                 <div class="song-artist">Bahaa Meghnous | Black Belt</div>
             </div>
         </div>
-        <audio id="bgMusic" loop>
-            <source src="audio/Page bahaa d.mp3" type="audio/mpeg">
-            Your browser does not support the audio element.
-        </audio>
-        <button id="musicToggleBtn" class="music-toggle" onclick="toggleMusic()">🔊</button>
+        
+        <!-- زر الإيقاف والتشغيل -->
+        <button id="playPauseBtn" class="music-control-btn">
+            ⏸️ إيقاف
+        </button>
+        
+        <!-- التحكم في مستوى الصوت -->
+        <div class="volume-control">
+            <span>🔊</span>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="100" value="70">
+        </div>
     </div>
 </div>
+
+<!-- عنصر الصوت المخفي -->
+<audio id="bgMusic" loop preload="auto">
+    <source src="audio/Page bahaa d.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
 
 <div class="container">
 
@@ -730,60 +742,94 @@ function goBack() {
 }
 
 // ==================================================
-// 🎵 تشغيل الموسيقى تلقائياً فور دخول الصفحة
+// 🎵 التحكم في الموسيقى (تشغيل تلقائي + زر إيقاف/تشغيل + صوت)
 // ==================================================
 
-// الحصول على عنصر الصوت
-const audioPlayer = document.getElementById('bgMusic');
-const musicToggleBtn = document.getElementById('musicToggleBtn');
+// الحصول على العناصر
+const audio = document.getElementById('bgMusic');
+const playPauseBtn = document.getElementById('playPauseBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+
+// متغير لتتبع حالة التشغيل
+let isPlaying = false;
 
 // دالة لتشغيل الموسيقى
 function playMusic() {
-    if (audioPlayer) {
-        audioPlayer.play().then(() => {
-            console.log("✅ Music started playing automatically");
-            if (musicToggleBtn) musicToggleBtn.innerHTML = '🔊';
+    if (audio) {
+        audio.play().then(() => {
+            isPlaying = true;
+            playPauseBtn.innerHTML = '⏸️ إيقاف';
+            playPauseBtn.style.background = "linear-gradient(135deg, #ff4d4d, #ffaa00)";
+            console.log("✅ Music playing");
         }).catch(error => {
             console.log("⚠️ Auto-play blocked:", error);
-            // محاولة بديلة: التشغيل عند أي تفاعل
-            document.body.addEventListener('click', function playOnClick() {
-                audioPlayer.play();
-                if (musicToggleBtn) musicToggleBtn.innerHTML = '🔊';
-                document.body.removeEventListener('click', playOnClick);
-            }, { once: true });
+            isPlaying = false;
+            playPauseBtn.innerHTML = '▶️ تشغيل';
         });
     }
 }
 
-// دالة لإيقاف/تشغيل الموسيقى يدوياً
-function toggleMusic() {
-    if (audioPlayer.paused) {
-        audioPlayer.play();
-        musicToggleBtn.innerHTML = '🔊';
-    } else {
-        audioPlayer.pause();
-        musicToggleBtn.innerHTML = '🔈';
+// دالة لإيقاف الموسيقى
+function pauseMusic() {
+    if (audio) {
+        audio.pause();
+        isPlaying = false;
+        playPauseBtn.innerHTML = '▶️ تشغيل';
+        playPauseBtn.style.background = "linear-gradient(135deg, #555, #333)";
+        console.log("⏸️ Music paused");
     }
 }
 
-// تشغيل الموسيقى فور تحميل الصفحة
+// دالة لتبديل الحالة (تشغيل/إيقاف)
+function toggleMusic() {
+    if (isPlaying) {
+        pauseMusic();
+    } else {
+        playMusic();
+    }
+}
+
+// دالة لتغيير مستوى الصوت
+function setVolume(value) {
+    if (audio) {
+        audio.volume = value / 100;
+        console.log(`🔊 Volume set to ${value}%`);
+    }
+}
+
+// إضافة أحداث الأزرار
+playPauseBtn.addEventListener('click', toggleMusic);
+volumeSlider.addEventListener('input', (e) => setVolume(e.target.value));
+
+// ==================================================
+// 🎵 تشغيل الموسيقى تلقائياً فور تحميل الصفحة
+// ==================================================
+
+// محاولة تشغيل الموسيقى فوراً
 window.addEventListener('load', function() {
-    // محاولة تشغيل الموسيقى فوراً
-    playMusic();
+    // تعيين مستوى الصوت الافتراضي
+    audio.volume = 0.7;
+    volumeSlider.value = 70;
     
-    // أيضاً محاولة تشغيلها بعد 0.5 ثانية للتأكد
+    // محاولة تشغيل الموسيقى
     setTimeout(() => {
-        if (audioPlayer.paused) {
+        playMusic();
+    }, 100);
+    
+    // محاولة ثانية بعد ثانية للتأكد
+    setTimeout(() => {
+        if (audio.paused) {
             playMusic();
         }
-    }, 500);
+    }, 1000);
 });
 
-// التأكد من أن الموسيقى تعمل حتى بعد تفاعل المستخدم مع الصفحة
-document.addEventListener('click', function ensureMusic() {
-    if (audioPlayer && audioPlayer.paused && !audioPlayer.ended) {
-        audioPlayer.play().catch(e => console.log('Still blocked'));
+// إذا منع المتصفح التشغيل التلقائي، نشغلها عند أول نقرة
+document.addEventListener('click', function firstClick() {
+    if (audio.paused) {
+        playMusic();
     }
+    document.removeEventListener('click', firstClick);
 });
 
 // Digital Clock
