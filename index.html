@@ -6,7 +6,6 @@
 <title>Compte Bahaa | Black Belt Access</title>
 
 <style>
-/* ===== RESET & BASE ===== */
 * {
     margin: 0;
     padding: 0;
@@ -26,7 +25,6 @@ body {
     overflow-x: hidden;
 }
 
-/* خلفية متحركة */
 body::before {
     content: '';
     position: fixed;
@@ -45,7 +43,7 @@ body::before {
     100% { opacity: 0.6; transform: scale(1.3);}
 }
 
-/* ===== زر الادمن ===== */
+/* ===== زر الادمن - كما كان من قبل ===== */
 .admin-btn {
     position: fixed;
     top: 20px;
@@ -72,7 +70,6 @@ body::before {
     box-shadow: 0 0 15px #ff4d4d;
 }
 
-/* ===== الصندوق الرئيسي ===== */
 .box {
     background: rgba(12, 12, 20, 0.65);
     backdrop-filter: blur(14px);
@@ -91,7 +88,6 @@ body::before {
     border-color: #ffaa55;
 }
 
-/* ===== الصورة الدائرية ===== */
 .circle img {
     width: 150px;
     height: 150px;
@@ -105,10 +101,8 @@ body::before {
 .circle img:hover {
     transform: scale(1.05);
     border-color: #ffaa55;
-    box-shadow: 0 0 40px #ffaa55;
 }
 
-/* ===== العنوان ===== */
 .box h2 {
     margin: 25px 0 20px;
     font-size: 28px;
@@ -117,10 +111,9 @@ body::before {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    letter-spacing: 1px;
 }
 
-/* ===== زر TRACKING الرئيسي ===== */
+/* زر TRACKING الرئيسي */
 #h {
     margin-top: 20px;
     padding: 14px 32px;
@@ -133,175 +126,272 @@ body::before {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 0 20px rgba(255, 80, 80, 0.6);
-    letter-spacing: 1px;
 }
 
 #h:hover {
     transform: scale(1.08);
-    background: linear-gradient(135deg, #ffaa00, #ff4d4d);
     box-shadow: 0 0 35px #ffaa55;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 550px) {
-    .box {
-        padding: 35px 25px;
-        width: 90%;
-    }
-    .circle img {
-        width: 110px;
-        height: 110px;
-    }
-    .box h2 {
-        font-size: 22px;
-    }
-    #h {
-        padding: 12px 24px;
-        font-size: 16px;
-    }
-    .admin-btn {
-        top: 12px;
-        left: 12px;
-        padding: 5px 12px;
-        font-size: 10px;
-    }
+    .box { padding: 35px 25px; width: 90%; }
+    .circle img { width: 110px; height: 110px; }
+    .box h2 { font-size: 22px; }
+    #h { padding: 12px 24px; font-size: 16px; }
+    .admin-btn { padding: 5px 12px; font-size: 10px; }
 }
 </style>
 </head>
 <body>
 
+<!-- ===== زر الادمن - نص كامل كما كان ===== -->
 <button class="admin-btn" onclick="openAdmin()">● ADMIN ACCESS</button>
 
 <div class="box">
     <div class="circle">
-        <img src="images/1777276122460.png">
+        <img src="images/1777276122460.png" onerror="this.src='https://via.placeholder.com/150?text=Bahaa'">
     </div>
-
     <h2>⚡BAHAA MEGHNOUS⚡</h2>
-
     <button id="h">🥋 TRACKING / ENTRANCE 🥋</button>
 </div>
 
-<!-- ========== FIREBASE + GEOLOCATION ========== -->
 <script type="module">
 
 // ==================================================
 // 🔧 أدخل مفاتيح Firebase الصحيحة هنا 🔧
 // ==================================================
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",           // ادخل الـ API Key الصحيح
+    apiKey: "YOUR_API_KEY",
     authDomain: "bahaa-tracking-bc38c.firebaseapp.com",
     databaseURL: "https://bahaa-tracking-bc38c-default-rtdb.firebaseio.com",
     projectId: "bahaa-tracking-bc38c",
     storageBucket: "bahaa-tracking-bc38c.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",  // ادخل الـ Sender ID الصحيح
-    appId: "YOUR_APP_ID"                  // ادخل الـ App ID الصحيح
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID"
 };
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
 
-// التحقق من صحة المفاتيح قبل التهيئة
-if (firebaseConfig.apiKey === "YOUR_API_KEY" || firebaseConfig.messagingSenderId === "YOUR_SENDER_ID") {
-    console.warn("⚠️ يرجى إدخال مفاتيح Firebase الصحيحة في الكود!");
+let db;
+try {
+    const app = initializeApp(firebaseConfig);
+    db = getDatabase(app);
+    console.log("Firebase ready");
+} catch(e) {
+    console.error("Firebase error:", e);
 }
 
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+// ==================================================
+// 🌍 جلب الموقع الجغرافي (في الخلفية - المستخدم لا يشعر)
+// ==================================================
 
-// 🌍 دالة لجلب الموقع التقريبي من الـ IP
 async function getLocationInfo() {
     try {
-        // استخدام ip-api.com المجانية
-        const response = await fetch('https://ip-api.com/json/');
+        const response = await fetch('https://ipapi.co/json/');
         const data = await response.json();
-        if (data.status === 'success') {
+        if (data && data.country_name) {
             return {
-                country: data.country || "غير معروف",
+                country: data.country_name,
+                countryCode: data.country_code,
                 city: data.city || "غير معروف",
-                region: data.regionName || "غير معروف",
-                lat: data.lat || "0",
-                lon: data.lon || "0",
-                isp: data.isp || "غير معروف"
+                region: data.region,
+                lat: data.latitude,
+                lon: data.longitude,
+                isp: data.org,
+                source: 'ipapi.co'
             };
-        } else {
-            return { country: "غير معروف", city: "غير معروف", region: "غير معروف", lat: "0", lon: "0", isp: "غير معروف" };
         }
-    } catch (error) {
-        console.log("Geolocation error:", error);
-        return { country: "خطأ", city: "خطأ", region: "خطأ", lat: "0", lon: "0", isp: "خطأ" };
-    }
+    } catch(e) {}
+    
+    try {
+        const response = await fetch('https://ipwho.is/');
+        const data = await response.json();
+        if (data && data.success !== false) {
+            return {
+                country: data.country,
+                countryCode: data.country_code,
+                city: data.city || "غير معروف",
+                region: data.region,
+                lat: data.latitude,
+                lon: data.longitude,
+                isp: data.connection?.isp,
+                source: 'ipwho.is'
+            };
+        }
+    } catch(e) {}
+    
+    return {
+        country: "غير معروف",
+        city: "غير معروف",
+        region: "غير معروف",
+        source: 'unknown'
+    };
 }
 
-// دالة لتحديد نوع الجهاز
+// ==================================================
+// 📱 جمع معلومات الجهاز والمتصفح
+// ==================================================
+
+function getOperatingSystem() {
+    const ua = navigator.userAgent;
+    if (ua.includes('Windows')) return 'Windows';
+    if (ua.includes('Mac OS')) return 'macOS';
+    if (ua.includes('Linux')) return 'Linux';
+    if (ua.includes('Android')) return 'Android';
+    if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
+    return 'غير معروف';
+}
+
+function getBrowser() {
+    const ua = navigator.userAgent;
+    if (ua.includes('Chrome') && !ua.includes('Edg')) return 'Chrome';
+    if (ua.includes('Firefox')) return 'Firefox';
+    if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
+    if (ua.includes('Edg')) return 'Edge';
+    if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
+    return 'متصفح آخر';
+}
+
 function getDeviceType() {
     const ua = navigator.userAgent;
-    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
-        return '📱 Tablet';
-    }
-    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(ob|in)i/i.test(ua)) {
-        return '📱 Mobile Phone';
-    }
-    return '💻 Desktop / Laptop';
+    const isMobile = /Mobile|Android|iP(hone|od)|IEMobile|BlackBerry/i.test(ua);
+    const isTablet = /(tablet|ipad|playbook)|(android(?!.*mobi))/i.test(ua);
+    if (isTablet) return 'Tablet';
+    if (isMobile) return 'Mobile';
+    return 'Desktop';
 }
 
-document.getElementById("h").addEventListener("click", async () => {
+function getConnectionType() {
+    const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (connection) {
+        const type = connection.effectiveType;
+        if (type === '4g') return '4G';
+        if (type === '3g') return '3G';
+        if (type === '2g') return '2G';
+        return 'WiFi';
+    }
+    return 'غير معروف';
+}
 
-    // عرض رسالة تحميل (اختياري)
-    const btn = document.getElementById("h");
-    const originalText = btn.innerText;
-    btn.innerText = "⏳ جاري التسجيل...";
-    btn.disabled = true;
+// إنشاء بصمة فريدة للجهاز
+function generateFingerprint() {
+    const components = [
+        navigator.userAgent,
+        navigator.language,
+        screen.width + 'x' + screen.height,
+        screen.colorDepth,
+        navigator.hardwareConcurrency || 'unknown'
+    ];
+    let hash = 0;
+    const str = components.join('|');
+    for (let i = 0; i < str.length; i++) {
+        hash = ((hash << 5) - hash) + str.charCodeAt(i);
+        hash |= 0;
+    }
+    return Math.abs(hash).toString(36);
+}
 
+// التحقق من الزيارات السابقة
+function getVisitCount(fingerprint) {
+    const visits = localStorage.getItem('visitHistory');
+    if (visits) {
+        const history = JSON.parse(visits);
+        const record = history.find(v => v.fingerprint === fingerprint);
+        if (record) {
+            return { count: record.count + 1, isReturning: true };
+        }
+    }
+    return { count: 1, isReturning: false };
+}
+
+function saveVisitRecord(fingerprint, count) {
+    const visits = localStorage.getItem('visitHistory');
+    let history = visits ? JSON.parse(visits) : [];
+    const existingIndex = history.findIndex(v => v.fingerprint === fingerprint);
+    if (existingIndex !== -1) {
+        history[existingIndex].count = count;
+        history[existingIndex].lastTime = new Date().toISOString();
+    } else {
+        history.push({
+            fingerprint: fingerprint,
+            count: count,
+            firstTime: new Date().toISOString(),
+            lastTime: new Date().toISOString()
+        });
+    }
+    localStorage.setItem('visitHistory', JSON.stringify(history.slice(-20)));
+}
+
+// ==================================================
+// 🎯 التسجيل التلقائي (المستخدم لا يشعر بشيء)
+// ==================================================
+
+async function registerVisitor() {
     try {
-        // 🌍 جلب الموقع
+        // جلب الموقع
         const location = await getLocationInfo();
-
-        // 🌐 اللغة والمنطقة الزمنية
-        const language = navigator.language || "غير معروف";
-        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "غير معروف";
-
+        
+        // جمع المعلومات
+        const fingerprint = generateFingerprint();
+        const visitInfo = getVisitCount(fingerprint);
+        saveVisitRecord(fingerprint, visitInfo.count);
+        
         const visitor = {
-            time: new Date().toLocaleString('fr-FR', { hour12: false }),
+            time: new Date().toLocaleString('fr-FR'),
             timestamp: Date.now(),
-            type: getDeviceType(),
-            device: navigator.userAgent,
-            platform: navigator.platform,
-            // 🌍 معلومات الموقع التقريبية
+            // الموقع الجغرافي
             country: location.country,
             city: location.city,
             region: location.region,
-            language: language,
-            timezone: timezone,
-            latitude: location.lat,
-            longitude: location.lon,
-            isp: location.isp,
-            // معلومات إضافية
+            isp: location.isp || "غير معروف",
+            // الجهاز والمتصفح
+            deviceType: getDeviceType(),
+            operatingSystem: getOperatingSystem(),
+            browser: getBrowser(),
+            // معلومات تقنية
+            userAgent: navigator.userAgent,
+            language: navigator.language,
+            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             screenResolution: `${screen.width}x${screen.height}`,
-            pageUrl: window.location.href
+            connectionType: getConnectionType(),
+            // معلومات الزيارات
+            fingerprint: fingerprint,
+            visitCount: visitInfo.count,
+            isReturning: visitInfo.isReturning
         };
-
-        console.log("📝 Visitor data:", visitor);
-
-        // 🔥 تسجيل في Firebase
-        await push(ref(db, "visitors"), visitor);
-        console.log("✅ تم تسجيل الزائر بنجاح!");
-
-        // 🚀 انتقال إلى لوحة التحكم (بدلاً من index (2).html)
-        window.location.href = "index2.html";
-
-    } catch (error) {
-        console.error("❌ خطأ:", error);
-        btn.innerText = originalText;
-        btn.disabled = false;
-        alert("حدث خطأ، يرجى المحاولة مرة أخرى.");
+        
+        console.log("تم تسجيل زائر:", visitor);
+        
+        // حفظ في Firebase (خلفية)
+        if (db) {
+            await push(ref(db, "visitors"), visitor);
+        }
+        
+    } catch(error) {
+        console.log("خطأ في التسجيل:", error);
     }
+}
+
+// ==================================================
+// 🚀 تشغيل التسجيل التلقائي عند تحميل الصفحة
+// ==================================================
+
+// تسجيل تلقائي عند تحميل الصفحة (بدون أن يشعر المستخدم)
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        registerVisitor();
+    }, 500);
 });
 
-// 🔐 زر الأدمن
-window.openAdmin = function () {
+// عند الضغط على زر الدخول - ينتقل مباشرة
+document.getElementById("h").addEventListener("click", (e) => {
+    window.location.href = "index2.html";
+});
+
+// ===== زر الادمن - كامل كما كان =====
+window.openAdmin = function() {
     let pass = prompt("أدخل كلمة السر:");
-    // كلمة السر متطابقة مع الصفحة الثانية
     if (pass === "041263312") {
         window.location.href = "index3.html";
     } else {
@@ -310,6 +400,5 @@ window.openAdmin = function () {
 }
 
 </script>
-
 </body>
 </html>

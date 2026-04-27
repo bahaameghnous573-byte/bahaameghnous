@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
 <head>
 <meta charset="UTF-8">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bahaa Meghnous | Black Belt Champion</title>
 
 <style>
@@ -94,7 +94,7 @@ header h1 {
 }
 
 /* ================================================== */
-/* 🎵 Custom Stylish Music Player */
+/* 🎵 مشغل الموسيقى - مناسب للهاتف والحاسوب 🎵 */
 /* ================================================== */
 
 .audio-player-container {
@@ -120,11 +120,10 @@ header h1 {
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(20, 10, 30, 0.9));
     backdrop-filter: blur(15px);
     border-radius: 65px;
-    padding: 12px 20px 12px 25px;
+    padding: 8px 15px;
     border: 1px solid rgba(255, 80, 80, 0.5);
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 80, 80, 0.3);
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
 }
 
 .music-card:hover {
@@ -133,14 +132,16 @@ header h1 {
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 170, 85, 0.4);
 }
 
+/* تحسين عنصر الصوت ليكون مناسباً للهاتف والحاسوب */
 .music-card audio {
     display: block;
-    height: 45px;
-    width: 260px;
+    height: 40px;
+    width: 250px;
     border-radius: 45px;
     background: rgba(0, 0, 0, 0.6);
 }
 
+/* تخصيص أزرار التحكم في المتصفح */
 .music-card audio::-webkit-media-controls-panel {
     background: linear-gradient(135deg, #1a0f25, #0a0a1a);
     border-radius: 45px;
@@ -161,13 +162,22 @@ header h1 {
 .music-card audio::-webkit-media-controls-time-remaining-display {
     color: #ffaa88;
     font-weight: bold;
+    font-size: 11px;
+}
+
+.music-card audio::-webkit-media-controls-timeline {
+    margin: 0 5px;
+}
+
+.music-card audio::-webkit-media-controls-volume-slider {
+    width: 50px;
 }
 
 .music-icon {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    margin-left: 12px;
+    gap: 6px;
+    margin-right: 10px;
     animation: pulseMusic 1.5s ease-in-out infinite;
 }
 
@@ -183,17 +193,42 @@ header h1 {
 }
 
 .music-icon span {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
 }
 
 .song-title {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     color: #ffaa88;
-    margin-top: 6px;
+    margin-top: 5px;
     text-align: center;
     letter-spacing: 1px;
     font-weight: 500;
     text-shadow: 0 0 5px rgba(255, 80, 80, 0.5);
+}
+
+/* تحسين للشاشات الصغيرة (الهاتف) */
+@media (max-width: 600px) {
+    .music-card {
+        padding: 6px 12px;
+        border-radius: 50px;
+    }
+    .music-card audio {
+        width: 180px;
+        height: 35px;
+    }
+    .music-card audio::-webkit-media-controls-current-time-display,
+    .music-card audio::-webkit-media-controls-time-remaining-display {
+        font-size: 9px;
+    }
+    .music-card audio::-webkit-media-controls-volume-slider {
+        width: 35px;
+    }
+    .music-icon span {
+        font-size: 1rem;
+    }
+    .song-title {
+        font-size: 0.6rem;
+    }
 }
 
 /* Quotes Section */
@@ -516,8 +551,6 @@ header h1 {
 }
 
 @media (max-width: 600px) {
-    .music-card audio { width: 200px; }
-    .song-title { font-size: 0.65rem; }
     #goBackBtn { padding: 8px 16px; font-size: 0.9rem; }
 }
 </style>
@@ -631,7 +664,7 @@ header h1 {
 <!-- Music Player -->
 <div class="audio-player-container">
     <div class="music-card">
-        <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 8px;">
             <div class="music-icon">
                 <span>🎵</span>
                 <span>🎶</span>
