@@ -43,7 +43,6 @@ body::before {
     100% { opacity: 0.6; transform: scale(1.3);}
 }
 
-/* ===== زر الادمن - كما كان من قبل ===== */
 .admin-btn {
     position: fixed;
     top: 20px;
@@ -101,6 +100,7 @@ body::before {
 .circle img:hover {
     transform: scale(1.05);
     border-color: #ffaa55;
+    box-shadow: 0 0 40px #ffaa55;
 }
 
 .box h2 {
@@ -111,9 +111,9 @@ body::before {
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+    letter-spacing: 1px;
 }
 
-/* زر TRACKING الرئيسي */
 #h {
     margin-top: 20px;
     padding: 14px 32px;
@@ -126,10 +126,12 @@ body::before {
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 0 20px rgba(255, 80, 80, 0.6);
+    letter-spacing: 1px;
 }
 
 #h:hover {
     transform: scale(1.08);
+    background: linear-gradient(135deg, #ffaa00, #ff4d4d);
     box-shadow: 0 0 35px #ffaa55;
 }
 
@@ -138,27 +140,26 @@ body::before {
     .circle img { width: 110px; height: 110px; }
     .box h2 { font-size: 22px; }
     #h { padding: 12px 24px; font-size: 16px; }
-    .admin-btn { padding: 5px 12px; font-size: 10px; }
+    .admin-btn { top: 12px; left: 12px; padding: 5px 12px; font-size: 10px; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== زر الادمن - نص كامل كما كان ===== -->
 <button class="admin-btn" onclick="openAdmin()">● ADMIN ACCESS</button>
 
 <div class="box">
     <div class="circle">
         <img src="images/1777276122460.png" onerror="this.src='https://via.placeholder.com/150?text=Bahaa'">
     </div>
-    <h2>⚡BAHAA MEGHNOUS⚡</h2>
+    <h2>⚡ BAHAA MEGHNOUS ⚡</h2>
     <button id="h">🥋 TRACKING / ENTRANCE 🥋</button>
 </div>
 
 <script type="module">
 
 // ==================================================
-// 🔧 أدخل مفاتيح Firebase الصحيحة هنا 🔧
+// 🔧 Firebase Configuration - PUT YOUR REAL KEYS HERE
 // ==================================================
 const firebaseConfig = {
     apiKey: "YOUR_API_KEY",
@@ -177,13 +178,13 @@ let db;
 try {
     const app = initializeApp(firebaseConfig);
     db = getDatabase(app);
-    console.log("Firebase ready");
+    console.log("✅ Firebase connected");
 } catch(e) {
-    console.error("Firebase error:", e);
+    console.error("❌ Firebase error:", e);
 }
 
 // ==================================================
-// 🌍 جلب الموقع الجغرافي (في الخلفية - المستخدم لا يشعر)
+// 🌍 Get location from IP
 // ==================================================
 
 async function getLocationInfo() {
@@ -194,7 +195,7 @@ async function getLocationInfo() {
             return {
                 country: data.country_name,
                 countryCode: data.country_code,
-                city: data.city || "غير معروف",
+                city: data.city || "Unknown",
                 region: data.region,
                 lat: data.latitude,
                 lon: data.longitude,
@@ -202,7 +203,7 @@ async function getLocationInfo() {
                 source: 'ipapi.co'
             };
         }
-    } catch(e) {}
+    } catch(e) { console.log("ipapi.co failed"); }
     
     try {
         const response = await fetch('https://ipwho.is/');
@@ -211,7 +212,7 @@ async function getLocationInfo() {
             return {
                 country: data.country,
                 countryCode: data.country_code,
-                city: data.city || "غير معروف",
+                city: data.city || "Unknown",
                 region: data.region,
                 lat: data.latitude,
                 lon: data.longitude,
@@ -219,18 +220,18 @@ async function getLocationInfo() {
                 source: 'ipwho.is'
             };
         }
-    } catch(e) {}
+    } catch(e) { console.log("ipwho.is failed"); }
     
     return {
-        country: "غير معروف",
-        city: "غير معروف",
-        region: "غير معروف",
+        country: "Unknown",
+        city: "Unknown",
+        region: "Unknown",
         source: 'unknown'
     };
 }
 
 // ==================================================
-// 📱 جمع معلومات الجهاز والمتصفح
+// 📱 Get device and browser info
 // ==================================================
 
 function getOperatingSystem() {
@@ -240,7 +241,7 @@ function getOperatingSystem() {
     if (ua.includes('Linux')) return 'Linux';
     if (ua.includes('Android')) return 'Android';
     if (ua.includes('iOS') || ua.includes('iPhone') || ua.includes('iPad')) return 'iOS';
-    return 'غير معروف';
+    return 'Unknown';
 }
 
 function getBrowser() {
@@ -250,7 +251,7 @@ function getBrowser() {
     if (ua.includes('Safari') && !ua.includes('Chrome')) return 'Safari';
     if (ua.includes('Edg')) return 'Edge';
     if (ua.includes('Opera') || ua.includes('OPR')) return 'Opera';
-    return 'متصفح آخر';
+    return 'Other';
 }
 
 function getDeviceType() {
@@ -271,10 +272,9 @@ function getConnectionType() {
         if (type === '2g') return '2G';
         return 'WiFi';
     }
-    return 'غير معروف';
+    return 'Unknown';
 }
 
-// إنشاء بصمة فريدة للجهاز
 function generateFingerprint() {
     const components = [
         navigator.userAgent,
@@ -292,23 +292,15 @@ function generateFingerprint() {
     return Math.abs(hash).toString(36);
 }
 
-// التحقق من الزيارات السابقة
-function getVisitCount(fingerprint) {
-    const visits = localStorage.getItem('visitHistory');
-    if (visits) {
-        const history = JSON.parse(visits);
-        const record = history.find(v => v.fingerprint === fingerprint);
-        if (record) {
-            return { count: record.count + 1, isReturning: true };
-        }
-    }
-    return { count: 1, isReturning: false };
-}
+// ==================================================
+// 🔄 FIXED: Save and get visit count
+// ==================================================
 
 function saveVisitRecord(fingerprint, count) {
     const visits = localStorage.getItem('visitHistory');
     let history = visits ? JSON.parse(visits) : [];
     const existingIndex = history.findIndex(v => v.fingerprint === fingerprint);
+    
     if (existingIndex !== -1) {
         history[existingIndex].count = count;
         history[existingIndex].lastTime = new Date().toISOString();
@@ -320,82 +312,107 @@ function saveVisitRecord(fingerprint, count) {
             lastTime: new Date().toISOString()
         });
     }
-    localStorage.setItem('visitHistory', JSON.stringify(history.slice(-20)));
+    
+    // Keep only last 50 records
+    if (history.length > 50) {
+        history = history.slice(-50);
+    }
+    
+    localStorage.setItem('visitHistory', JSON.stringify(history));
+    // Store current visit count separately for quick access
+    localStorage.setItem(`vc_${fingerprint}`, count);
+}
+
+function getVisitCount(fingerprint) {
+    // First check if we have a stored count for this fingerprint
+    const savedCount = localStorage.getItem(`vc_${fingerprint}`);
+    if (savedCount !== null) {
+        const count = parseInt(savedCount) + 1;
+        return { count: count, isReturning: true };
+    }
+    
+    // Check history
+    const visits = localStorage.getItem('visitHistory');
+    if (visits) {
+        const history = JSON.parse(visits);
+        const record = history.find(v => v.fingerprint === fingerprint);
+        if (record) {
+            const newCount = record.count + 1;
+            return { count: newCount, isReturning: true };
+        }
+    }
+    
+    return { count: 1, isReturning: false };
 }
 
 // ==================================================
-// 🎯 التسجيل التلقائي (المستخدم لا يشعر بشيء)
+// 🎯 Register visitor with all details
 // ==================================================
 
 async function registerVisitor() {
     try {
-        // جلب الموقع
         const location = await getLocationInfo();
-        
-        // جمع المعلومات
         const fingerprint = generateFingerprint();
         const visitInfo = getVisitCount(fingerprint);
+        
+        // Save the new count
         saveVisitRecord(fingerprint, visitInfo.count);
         
         const visitor = {
-            time: new Date().toLocaleString('fr-FR'),
+            time: new Date().toLocaleString('en-GB'),
             timestamp: Date.now(),
-            // الموقع الجغرافي
             country: location.country,
             city: location.city,
             region: location.region,
-            isp: location.isp || "غير معروف",
-            // الجهاز والمتصفح
+            isp: location.isp || "Unknown",
+            locationSource: location.source,
             deviceType: getDeviceType(),
             operatingSystem: getOperatingSystem(),
             browser: getBrowser(),
-            // معلومات تقنية
             userAgent: navigator.userAgent,
             language: navigator.language,
             timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
             screenResolution: `${screen.width}x${screen.height}`,
             connectionType: getConnectionType(),
-            // معلومات الزيارات
             fingerprint: fingerprint,
             visitCount: visitInfo.count,
             isReturning: visitInfo.isReturning
         };
         
-        console.log("تم تسجيل زائر:", visitor);
+        console.log("✅ Visitor registered:", visitor);
         
-        // حفظ في Firebase (خلفية)
         if (db) {
             await push(ref(db, "visitors"), visitor);
+            console.log("✅ Saved to Firebase");
         }
         
+        return true;
     } catch(error) {
-        console.log("خطأ في التسجيل:", error);
+        console.log("❌ Registration error:", error);
+        return false;
     }
 }
 
 // ==================================================
-// 🚀 تشغيل التسجيل التلقائي عند تحميل الصفحة
+// 🚀 Register automatically on page load
 // ==================================================
 
-// تسجيل تلقائي عند تحميل الصفحة (بدون أن يشعر المستخدم)
 window.addEventListener('load', () => {
     setTimeout(() => {
         registerVisitor();
     }, 500);
 });
 
-// عند الضغط على زر الدخول - ينتقل مباشرة
 document.getElementById("h").addEventListener("click", (e) => {
     window.location.href = "index2.html";
 });
 
-// ===== زر الادمن - كامل كما كان =====
 window.openAdmin = function() {
-    let pass = prompt("أدخل كلمة السر:");
+    let pass = prompt("Enter password:");
     if (pass === "041263312") {
         window.location.href = "index3.html";
     } else {
-        alert("كلمة السر خاطئة");
+        alert("Wrong password");
     }
 }
 
