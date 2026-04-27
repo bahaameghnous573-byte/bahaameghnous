@@ -2,8 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1200">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Compte Bahaa | Black Belt Access</title>
 
 <style>
@@ -186,18 +185,26 @@ body::before {
 <!-- ========== FIREBASE + GEOLOCATION ========== -->
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
+// ==================================================
+// 🔧 أدخل مفاتيح Firebase الصحيحة هنا 🔧
+// ==================================================
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
+    apiKey: "YOUR_API_KEY",           // ادخل الـ API Key الصحيح
     authDomain: "bahaa-tracking-bc38c.firebaseapp.com",
     databaseURL: "https://bahaa-tracking-bc38c-default-rtdb.firebaseio.com",
     projectId: "bahaa-tracking-bc38c",
     storageBucket: "bahaa-tracking-bc38c.appspot.com",
-    messagingSenderId: "XXXX",
-    appId: "XXXX"
+    messagingSenderId: "YOUR_SENDER_ID",  // ادخل الـ Sender ID الصحيح
+    appId: "YOUR_APP_ID"                  // ادخل الـ App ID الصحيح
 };
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getDatabase, ref, push } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+// التحقق من صحة المفاتيح قبل التهيئة
+if (firebaseConfig.apiKey === "YOUR_API_KEY" || firebaseConfig.messagingSenderId === "YOUR_SENDER_ID") {
+    console.warn("⚠️ يرجى إدخال مفاتيح Firebase الصحيحة في الكود!");
+}
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -205,7 +212,8 @@ const db = getDatabase(app);
 // 🌍 دالة لجلب الموقع التقريبي من الـ IP
 async function getLocationInfo() {
     try {
-        const response = await fetch('http://ip-api.com/json/');
+        // استخدام ip-api.com المجانية
+        const response = await fetch('https://ip-api.com/json/');
         const data = await response.json();
         if (data.status === 'success') {
             return {
@@ -213,56 +221,87 @@ async function getLocationInfo() {
                 city: data.city || "غير معروف",
                 region: data.regionName || "غير معروف",
                 lat: data.lat || "0",
-                lon: data.lon || "0"
+                lon: data.lon || "0",
+                isp: data.isp || "غير معروف"
             };
         } else {
-            return { country: "غير معروف", city: "غير معروف", region: "غير معروف", lat: "0", lon: "0" };
+            return { country: "غير معروف", city: "غير معروف", region: "غير معروف", lat: "0", lon: "0", isp: "غير معروف" };
         }
     } catch (error) {
         console.log("Geolocation error:", error);
-        return { country: "خطأ", city: "خطأ", region: "خطأ", lat: "0", lon: "0" };
+        return { country: "خطأ", city: "خطأ", region: "خطأ", lat: "0", lon: "0", isp: "خطأ" };
     }
+}
+
+// دالة لتحديد نوع الجهاز
+function getDeviceType() {
+    const ua = navigator.userAgent;
+    if (/(tablet|ipad|playbook|silk)|(android(?!.*mobi))/i.test(ua)) {
+        return '📱 Tablet';
+    }
+    if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(ob|in)i/i.test(ua)) {
+        return '📱 Mobile Phone';
+    }
+    return '💻 Desktop / Laptop';
 }
 
 document.getElementById("h").addEventListener("click", async () => {
 
-    // 🌍 جلب الموقع
-    const location = await getLocationInfo();
+    // عرض رسالة تحميل (اختياري)
+    const btn = document.getElementById("h");
+    const originalText = btn.innerText;
+    btn.innerText = "⏳ جاري التسجيل...";
+    btn.disabled = true;
 
-    // 🌐 اللغة والمنطقة الزمنية
-    const language = navigator.language || "غير معروف";
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "غير معروف";
-
-    const visitor = {
-        time: new Date().toLocaleString(),
-        type: /Mobi|Android/i.test(navigator.userAgent) ? "Mobile 📱" : "PC 💻",
-        device: navigator.userAgent,
-        // 🌍 معلومات الموقع التقريبية (قانونية وأخلاقية)
-        country: location.country,
-        city: location.city,
-        region: location.region,
-        language: language,
-        timezone: timezone,
-        // إحداثيات تقريبية (ليست دقيقة)
-        latitude: location.lat,
-        longitude: location.lon
-    };
-
-    // 🔥 تسجيل في Firebase
     try {
-        await push(ref(db, "visitors"), visitor);
-    } catch (e) {
-        console.log("Firebase error:", e);
-    }
+        // 🌍 جلب الموقع
+        const location = await getLocationInfo();
 
-    // 🚀 انتقال
-    window.location.href = "./index (2).html";
+        // 🌐 اللغة والمنطقة الزمنية
+        const language = navigator.language || "غير معروف";
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone || "غير معروف";
+
+        const visitor = {
+            time: new Date().toLocaleString('fr-FR', { hour12: false }),
+            timestamp: Date.now(),
+            type: getDeviceType(),
+            device: navigator.userAgent,
+            platform: navigator.platform,
+            // 🌍 معلومات الموقع التقريبية
+            country: location.country,
+            city: location.city,
+            region: location.region,
+            language: language,
+            timezone: timezone,
+            latitude: location.lat,
+            longitude: location.lon,
+            isp: location.isp,
+            // معلومات إضافية
+            screenResolution: `${screen.width}x${screen.height}`,
+            pageUrl: window.location.href
+        };
+
+        console.log("📝 Visitor data:", visitor);
+
+        // 🔥 تسجيل في Firebase
+        await push(ref(db, "visitors"), visitor);
+        console.log("✅ تم تسجيل الزائر بنجاح!");
+
+        // 🚀 انتقال إلى لوحة التحكم (بدلاً من index (2).html)
+        window.location.href = "index2.html";
+
+    } catch (error) {
+        console.error("❌ خطأ:", error);
+        btn.innerText = originalText;
+        btn.disabled = false;
+        alert("حدث خطأ، يرجى المحاولة مرة أخرى.");
+    }
 });
 
 // 🔐 زر الأدمن
 window.openAdmin = function () {
     let pass = prompt("أدخل كلمة السر:");
-
+    // كلمة السر متطابقة مع الصفحة الثانية
     if (pass === "041263312") {
         window.location.href = "index3.html";
     } else {
