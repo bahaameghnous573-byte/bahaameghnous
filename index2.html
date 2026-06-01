@@ -232,7 +232,7 @@ body::before {
     100% { background-position: 200% 0%; }
 }
 
-/* 3️⃣ كرات ضوئية عائمة */
+/* 2️⃣ كرات ضوئية عائمة */
 .floating-orbs {
     position: fixed;
     width: 100%;
@@ -255,7 +255,7 @@ body::before {
     50% { transform: translate(30px, -30px) scale(1.2); opacity: 0.6; }
 }
 
-/* 4️⃣ عداد إنجازات متحرك */
+/* 3️⃣ عداد إنجازات متحرك */
 .achievement-counter {
     background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(30,15,40,0.7));
     backdrop-filter: blur(10px);
@@ -296,7 +296,7 @@ body::before {
     display: block;
 }
 
-/* 5️⃣ بطاقات متحركة ثلاثية الأبعاد */
+/* 4️⃣ بطاقات متحركة ثلاثية الأبعاد */
 .flip-card-container {
     display: flex;
     justify-content: center;
@@ -333,7 +333,7 @@ body::before {
     color: #ffaa55;
 }
 
-/* 6️⃣ خط زمني متحرك */
+/* 5️⃣ خط زمني متحرك */
 .timeline-section {
     margin: 40px 0;
     position: relative;
@@ -384,7 +384,7 @@ body::before {
     font-size: 0.85rem;
 }
 
-/* 7️⃣ مؤشر تحميل فاخر (يظهر عند التمرير) */
+/* 6️⃣ مؤشر تحميل فاخر (يظهر عند التمرير) */
 .scroll-progress {
     position: fixed;
     top: 3px;
@@ -396,7 +396,7 @@ body::before {
     transition: width 0.1s;
 }
 
-/* 8️⃣ تأثير كتابة تلقائي */
+/* 7️⃣ تأثير كتابة تلقائي */
 .auto-type {
     font-size: 1rem;
     color: #ffcc88;
@@ -412,28 +412,7 @@ body::before {
     50% { opacity: 0; }
 }
 
-/* 9️⃣ أزهار متساقطة */
-.falling-particles {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 5;
-}
-.particle {
-    position: absolute;
-    color: #ffaa55;
-    font-size: 10px;
-    animation: fall linear forwards;
-}
-@keyframes fall {
-    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
-
-/* 🔟 مؤشر إشعارات متحرك */
+/* 8️⃣ مؤشر إشعارات متحرك */
 .notification-bell {
     position: fixed;
     top: 20px;
@@ -1004,8 +983,6 @@ header h1 {
     <div class="orb orb-4"></div>
 </div>
 
-<div class="falling-particles" id="fallingParticles"></div>
-
 <div class="notification-bell" id="notificationBell">
     🔔
     <span class="notification-badge">3</span>
@@ -1280,7 +1257,6 @@ window.addEventListener('load', function() {
     volumeSlider.value = 70;
     setTimeout(() => playMusic(), 100);
     setTimeout(() => { if (audio.paused) playMusic(); }, 1000);
-    initFallingParticles();
     startCounterAnimation();
 });
 
@@ -1298,18 +1274,15 @@ function openLightbox(imgSrc) {
     const lightboxImg = document.getElementById('lightboxImg');
     lightbox.style.display = 'flex';
     lightboxImg.src = imgSrc;
-    // منع التمرير في الخلف
     document.body.style.overflow = 'hidden';
 }
 
 function closeLightbox() {
     const lightbox = document.getElementById('lightbox');
     lightbox.style.display = 'none';
-    // إعادة التمرير
     document.body.style.overflow = '';
 }
 
-// إغلاق الـ Lightbox عند الضغط على زر الرجوع في الهاتف
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         closeLightbox();
@@ -1320,7 +1293,7 @@ document.addEventListener('keydown', function(e) {
 // ✨ الإضافات الفاخرة - مؤثرات بصرية
 // ==================================================
 
-// 1️⃣ شريط التقدم عند التمرير
+// شريط التقدم عند التمرير
 window.addEventListener('scroll', () => {
     const winScroll = document.documentElement.scrollTop;
     const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -1328,7 +1301,7 @@ window.addEventListener('scroll', () => {
     document.getElementById('scrollProgress').style.width = scrolled + '%';
 });
 
-// 2️⃣ عداد إنجازات متحرك
+// عداد إنجازات متحرك
 function startCounterAnimation() {
     const medalsCount = document.getElementById('medalsCount');
     const tournamentsCount = document.getElementById('tournamentsCount');
@@ -1372,7 +1345,7 @@ function startCounterAnimation() {
     }, 50);
 }
 
-// 3️⃣ تأثير الكتابة التلقائي
+// تأثير الكتابة التلقائي
 const texts = ["🥋 Black Belt Champion", "🏆 Ranked 2nd East Algeria", "💪 Calisthenics Athlete", "⚡ Never Give Up", "🔥 13 Years of Training"];
 let textIndex = 0;
 let charIndex = 0;
@@ -1401,23 +1374,7 @@ function typeEffect() {
 }
 setTimeout(typeEffect, 500);
 
-// 4️⃣ جسيمات متساقطة
-function initFallingParticles() {
-    const container = document.getElementById('fallingParticles');
-    setInterval(() => {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.innerHTML = ['✨', '⭐', '🔥', '⚡', '🥋', '💪'][Math.floor(Math.random() * 6)];
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.fontSize = (Math.random() * 15 + 8) + 'px';
-        particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
-        particle.style.opacity = Math.random() * 0.7 + 0.3;
-        container.appendChild(particle);
-        setTimeout(() => particle.remove(), 5000);
-    }, 400);
-}
-
-// 5️⃣ ظهور العناصر عند التمرير (الخط الزمني)
+// ظهور العناصر عند التمرير (الخط الزمني)
 const observerOptions = { threshold: 0.3, rootMargin: '0px' };
 const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1429,7 +1386,7 @@ const observer = new IntersectionObserver((entries) => {
 
 document.querySelectorAll('.timeline-item').forEach(item => observer.observe(item));
 
-// 6️⃣ إشعار الجرس
+// إشعار الجرس
 let notificationCount = 3;
 const bell = document.getElementById('notificationBell');
 bell.addEventListener('click', () => {
@@ -1438,7 +1395,7 @@ bell.addEventListener('click', () => {
     alert("🔔 مرحباً بك في الصفحة الفاخرة! استمتع بتجربة التصفح 🥋");
 });
 
-// 7️⃣ زخرفة إضافية: تغيير لون البطاقات بشكل عشوائي
+// تغيير لون البطاقات بشكل عشوائي
 setInterval(() => {
     const cards = document.querySelectorAll('.flip-card');
     cards.forEach(card => {
@@ -1556,7 +1513,7 @@ document.getElementById("surpriseBtn").addEventListener("click", () => {
     alert("🏆 You are a true champion! Keep going strong 🥋💪");
 });
 
-// تدريب أيام (سجل التدريب)
+// تدريب أيام
 let trainingDays = localStorage.getItem('totalTrainingDays');
 if (trainingDays === null) trainingDays = 30;
 else trainingDays = parseInt(trainingDays);
