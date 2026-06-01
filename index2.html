@@ -215,24 +215,7 @@ body::before {
 /* ✨ إضافات فاخرة - مؤثرات بصرية */
 /* ============================================ */
 
-/* 1️⃣ شريط علوي لامع متحرك */
-.glow-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: linear-gradient(90deg, #ff0000, #ffaa00, #ffffff, #ffaa00, #ff0000);
-    background-size: 200% 100%;
-    animation: glowMove 2s linear infinite;
-    z-index: 1001;
-}
-@keyframes glowMove {
-    0% { background-position: 0% 0%; }
-    100% { background-position: 200% 0%; }
-}
-
-/* 2️⃣ كرات ضوئية عائمة */
+/* 1️⃣ كرات ضوئية عائمة */
 .floating-orbs {
     position: fixed;
     width: 100%;
@@ -255,7 +238,7 @@ body::before {
     50% { transform: translate(30px, -30px) scale(1.2); opacity: 0.6; }
 }
 
-/* 3️⃣ عداد إنجازات متحرك */
+/* 2️⃣ عداد إنجازات متحرك */
 .achievement-counter {
     background: linear-gradient(135deg, rgba(0,0,0,0.6), rgba(30,15,40,0.7));
     backdrop-filter: blur(10px);
@@ -296,7 +279,7 @@ body::before {
     display: block;
 }
 
-/* 4️⃣ بطاقات متحركة ثلاثية الأبعاد */
+/* 3️⃣ بطاقات متحركة ثلاثية الأبعاد */
 .flip-card-container {
     display: flex;
     justify-content: center;
@@ -333,7 +316,7 @@ body::before {
     color: #ffaa55;
 }
 
-/* 5️⃣ خط زمني متحرك */
+/* 4️⃣ خط زمني متحرك */
 .timeline-section {
     margin: 40px 0;
     position: relative;
@@ -384,10 +367,10 @@ body::before {
     font-size: 0.85rem;
 }
 
-/* 6️⃣ مؤشر تحميل فاخر (يظهر عند التمرير) */
+/* 5️⃣ مؤشر تحميل فاخر (يظهر عند التمرير) */
 .scroll-progress {
     position: fixed;
-    top: 3px;
+    top: 0;
     left: 0;
     width: 0%;
     height: 3px;
@@ -396,7 +379,7 @@ body::before {
     transition: width 0.1s;
 }
 
-/* 7️⃣ تأثير كتابة تلقائي */
+/* 6️⃣ تأثير كتابة تلقائي */
 .auto-type {
     font-size: 1rem;
     color: #ffcc88;
@@ -410,6 +393,27 @@ body::before {
 @keyframes blink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0; }
+}
+
+/* 7️⃣ أزهار متساقطة (تمت إعادتها) */
+.falling-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 5;
+}
+.particle {
+    position: absolute;
+    color: #ffaa55;
+    font-size: 10px;
+    animation: fall linear forwards;
+}
+@keyframes fall {
+    0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
 /* 8️⃣ مؤشر إشعارات متحرك */
@@ -972,8 +976,7 @@ header h1 {
 </div>
 <div class="sparkles"></div>
 
-<!-- ✨ الإضافات الفاخرة -->
-<div class="glow-bar"></div>
+<!-- ✨ الإضافات الفاخرة (تمت إزالة الخط المتوهج) -->
 <div class="scroll-progress" id="scrollProgress"></div>
 
 <div class="floating-orbs">
@@ -982,6 +985,8 @@ header h1 {
     <div class="orb orb-3"></div>
     <div class="orb orb-4"></div>
 </div>
+
+<div class="falling-particles" id="fallingParticles"></div>
 
 <div class="notification-bell" id="notificationBell">
     🔔
@@ -1257,6 +1262,7 @@ window.addEventListener('load', function() {
     volumeSlider.value = 70;
     setTimeout(() => playMusic(), 100);
     setTimeout(() => { if (audio.paused) playMusic(); }, 1000);
+    initFallingParticles();
     startCounterAnimation();
 });
 
@@ -1373,6 +1379,22 @@ function typeEffect() {
     setTimeout(typeEffect, isDeleting ? 80 : 120);
 }
 setTimeout(typeEffect, 500);
+
+// جسيمات متساقطة (تمت إعادتها)
+function initFallingParticles() {
+    const container = document.getElementById('fallingParticles');
+    setInterval(() => {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.innerHTML = ['✨', '⭐', '🔥', '⚡', '🥋', '💪'][Math.floor(Math.random() * 6)];
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.fontSize = (Math.random() * 15 + 8) + 'px';
+        particle.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        particle.style.opacity = Math.random() * 0.7 + 0.3;
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 5000);
+    }, 400);
+}
 
 // ظهور العناصر عند التمرير (الخط الزمني)
 const observerOptions = { threshold: 0.3, rootMargin: '0px' };
